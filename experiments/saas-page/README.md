@@ -22,10 +22,13 @@ node --test
 Open a page directly in the browser:
 
 ```text
+experiments/saas-page/compare.html
 experiments/saas-page/variants/openspec/public/index.html
 experiments/saas-page/variants/superpowers/public/index.html
 experiments/saas-page/variants/sgad/public/index.html
 ```
+
+Use `compare.html` to see all three interfaces embedded side by side.
 
 ## Results
 

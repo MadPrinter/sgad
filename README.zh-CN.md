@@ -142,10 +142,13 @@ npm run evaluate:saas
 打开页面：
 
 ```text
+experiments/saas-page/compare.html
 experiments/saas-page/variants/openspec/public/index.html
 experiments/saas-page/variants/superpowers/public/index.html
 experiments/saas-page/variants/sgad/public/index.html
 ```
+
+打开 `experiments/saas-page/compare.html` 可以同屏查看三份界面对比。
 
 | 方案 | 分数 | 百分比 |
 |---|---:|---:|

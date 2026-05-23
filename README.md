@@ -148,10 +148,13 @@ npm run evaluate:saas
 Open the pages:
 
 ```text
+experiments/saas-page/compare.html
 experiments/saas-page/variants/openspec/public/index.html
 experiments/saas-page/variants/superpowers/public/index.html
 experiments/saas-page/variants/sgad/public/index.html
 ```
+
+Open `experiments/saas-page/compare.html` for the side-by-side visual comparison.
 
 | Variant | Score | Percent |
 |---|---:|---:|

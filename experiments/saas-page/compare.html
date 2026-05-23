@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SGAD SaaS Page Comparison</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f5f7fb;
+      color: #172033;
+      --surface: #ffffff;
+      --line: #dce5f2;
+      --muted: #64748b;
+      --blue: #2563eb;
+      --green: #16803c;
+      --amber: #b45309;
+      --shadow: 0 18px 46px rgba(15, 23, 42, .10);
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    a { color: var(--blue); }
+    a:focus-visible, button:focus-visible { outline: 3px solid #38bdf8; outline-offset: 3px; }
+    header {
+      padding: 28px clamp(18px, 4vw, 48px) 18px;
+      background:
+        linear-gradient(135deg, rgba(15, 23, 42, .96), rgba(30, 64, 99, .92)),
+        #0f172a;
+      color: #f8fafc;
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 18px;
+      align-items: end;
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+    h1, h2, p { margin: 0; letter-spacing: 0; }
+    h1 { font-size: clamp(30px, 5vw, 56px); line-height: 1; }
+    .lede { color: #cbd5e1; margin-top: 12px; line-height: 1.6; max-width: 860px; }
+    .run {
+      border: 1px solid rgba(148, 163, 184, .3);
+      background: rgba(15, 23, 42, .46);
+      border-radius: 8px;
+      padding: 14px;
+      min-width: 260px;
+    }
+    code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 13px; }
+    main {
+      padding: 22px clamp(14px, 3vw, 34px) 42px;
+      max-width: 1680px;
+      margin: 0 auto;
+    }
+    .score-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+    .score-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: 16px;
+    }
+    .score-card h2 { font-size: 18px; margin-bottom: 8px; }
+    .score {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 4px;
+      font-size: 34px;
+      font-weight: 900;
+      color: var(--blue);
+    }
+    .score small { color: var(--muted); font-size: 15px; font-weight: 800; }
+    .score-card p { color: var(--muted); margin-top: 8px; line-height: 1.45; }
+    .score-card.sgad .score { color: var(--green); }
+    .comparison {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(360px, 1fr));
+      gap: 14px;
+      align-items: start;
+    }
+    .variant {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .variant-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      min-height: 68px;
+    }
+    .variant-title { display: grid; gap: 3px; }
+    .variant-title strong { font-size: 17px; }
+    .variant-title span { color: var(--muted); font-size: 13px; }
+    .badge {
+      border-radius: 999px;
+      padding: 5px 9px;
+      font-size: 12px;
+      font-weight: 900;
+      color: #075985;
+      background: #e0f2fe;
+      white-space: nowrap;
+    }
+    .badge.green { color: #166534; background: #dcfce7; }
+    .badge.amber { color: #92400e; background: #fef3c7; }
+    .frame-wrap {
+      height: 760px;
+      background: #e5edf7;
+    }
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: white;
+    }
+    .notes {
+      display: grid;
+      gap: 8px;
+      padding: 14px 16px 16px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+    .notes strong { color: #172033; }
+    @media (max-width: 1180px) {
+      .hero { grid-template-columns: 1fr; }
+      .score-grid { grid-template-columns: 1fr; }
+      .comparison { grid-template-columns: 1fr; }
+      .frame-wrap { height: 720px; }
+    }
+    @media (max-width: 640px) {
+      header { padding: 22px 16px 16px; }
+      main { padding: 16px; }
+      .frame-wrap { height: 640px; }
+      .variant-head { align-items: start; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="hero">
+      <div>
+        <h1>SaaS Page Experiment</h1>
+        <p class="lede">Three workflows build the same AI Ops dashboard. This page embeds the generated interfaces side by side so visual quality, density, and governance evidence are visible in the repository.</p>
+      </div>
+      <div class="run" aria-label="Run command">
+        <code>npm run evaluate:saas</code>
+      </div>
+    </div>
+  </header>
+  <main>
+    <section class="score-grid" aria-label="Scores">
+      <article class="score-card">
+        <h2>OpenSpec</h2>
+        <div class="score">95<small>/110</small></div>
+        <p>Strong proposal, spec, design, and task artifacts. UI evidence is mostly implicit.</p>
+      </article>
+      <article class="score-card">
+        <h2>Superpowers</h2>
+        <div class="score">95<small>/110</small></div>
+        <p>Strong execution workflow, tests, review checklist, and verification notes. No durable design system.</p>
+      </article>
+      <article class="score-card sgad">
+        <h2>SGAD v0.3</h2>
+        <div class="score">105<small>/110</small></div>
+        <p>Adds Design Track: DESIGN.md, R2-UI classification, design review, evidence matrix, and inspection notes.</p>
+      </article>
+    </section>
+    <section class="comparison" aria-label="Interface comparison">
+      <article class="variant">
+        <div class="variant-head">
+          <div class="variant-title"><strong>OpenSpec</strong><span>Specs first, functional SaaS dashboard</span></div>
+          <a class="badge" href="variants/openspec/public/index.html">Open page</a>
+        </div>
+        <div class="frame-wrap">
+          <iframe title="OpenSpec SaaS page" src="variants/openspec/public/index.html"></iframe>
+        </div>
+        <div class="notes">
+          <div><strong>Strength:</strong> requirements coverage and change docs.</div>
+          <div><strong>Gap:</strong> no dedicated DESIGN.md or UI evidence matrix.</div>
+        </div>
+      </article>
+      <article class="variant">
+        <div class="variant-head">
+          <div class="variant-title"><strong>Superpowers</strong><span>Execution discipline, TDD, review workflow</span></div>
+          <a class="badge amber" href="variants/superpowers/public/index.html">Open page</a>
+        </div>
+        <div class="frame-wrap">
+          <iframe title="Superpowers SaaS page" src="variants/superpowers/public/index.html"></iframe>
+        </div>
+        <div class="notes">
+          <div><strong>Strength:</strong> implementation plan, tests, review, verification.</div>
+          <div><strong>Gap:</strong> visual decisions are not reusable governance artifacts.</div>
+        </div>
+      </article>
+      <article class="variant">
+        <div class="variant-head">
+          <div class="variant-title"><strong>SGAD v0.3</strong><span>Governed UI with Design Track evidence</span></div>
+          <a class="badge green" href="variants/sgad/public/index.html">Open page</a>
+        </div>
+        <div class="frame-wrap">
+          <iframe title="SGAD SaaS page" src="variants/sgad/public/index.html"></iframe>
+        </div>
+        <div class="notes">
+          <div><strong>Strength:</strong> polished interface plus DESIGN.md, R2-UI, design review, and evidence matrix.</div>
+          <div><strong>Tradeoff:</strong> more ceremony, appropriate for UI-heavy or user-trust workflows.</div>
+        </div>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

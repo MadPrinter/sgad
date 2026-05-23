@@ -53,7 +53,10 @@ npm run evaluate:saas
 Open the pages:
 
 ```text
+experiments/saas-page/compare.html
 experiments/saas-page/variants/openspec/public/index.html
 experiments/saas-page/variants/superpowers/public/index.html
 experiments/saas-page/variants/sgad/public/index.html
 ```
+
+`compare.html` embeds all three interfaces side by side with scores and notes.
