@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Incident Response Center</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f6f7f9;
+      color: #17202a;
+    }
+    body {
+      margin: 0;
+    }
+    header {
+      background: #19324d;
+      color: #fff;
+      padding: 24px;
+    }
+    main {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: minmax(260px, 340px) 1fr;
+      margin: 0 auto;
+      max-width: 1180px;
+      padding: 24px;
+    }
+    section, form {
+      background: #fff;
+      border: 1px solid #d7dde5;
+      border-radius: 8px;
+      padding: 16px;
+    }
+    h1, h2 {
+      margin: 0 0 12px;
+    }
+    label {
+      display: grid;
+      gap: 6px;
+      font-weight: 650;
+      margin: 10px 0;
+    }
+    input, select, button {
+      border: 1px solid #bcc6d1;
+      border-radius: 6px;
+      font: inherit;
+      padding: 9px 10px;
+    }
+    button {
+      background: #1d6f62;
+      border-color: #1d6f62;
+      color: #fff;
+      cursor: pointer;
+      font-weight: 700;
+    }
+    button.secondary {
+      background: #fff;
+      color: #19324d;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border-bottom: 1px solid #e4e8ee;
+      padding: 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      color: #506174;
+      font-size: 13px;
+      text-transform: uppercase;
+    }
+    .layout-stack {
+      display: grid;
+      gap: 20px;
+    }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .badge {
+      border-radius: 999px;
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 800;
+      padding: 3px 8px;
+    }
+    .critical { background: #ffe2df; color: #9a2016; }
+    .high { background: #ffeed0; color: #885100; }
+    .medium { background: #dfeeff; color: #164f8b; }
+    .low { background: #e0f3e6; color: #196235; }
+    .status { background: #eef1f5; color: #2d3a47; }
+    .message {
+      min-height: 24px;
+      color: #8a3500;
+      font-weight: 650;
+    }
+    @media (max-width: 820px) {
+      main {
+        grid-template-columns: 1fr;
+        padding: 14px;
+      }
+      table {
+        display: block;
+        overflow-x: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Incident Response Center</h1>
+    <div>Multi-tenant incident tracking with RBAC, audit logging, and SLA reminders.</div>
+  </header>
+  <main>
+    <div class="layout-stack">
+      <section>
+        <h2>Request Context</h2>
+        <label>Tenant
+          <input id="tenantId" value="tenant-a">
+        </label>
+        <label>User
+          <input id="userId" value="user-1">
+        </label>
+        <label>Role
+          <select id="role">
+            <option value="admin">admin</option>
+            <option value="responder">responder</option>
+            <option value="viewer">viewer</option>
+          </select>
+        </label>
+        <div class="actions">
+          <button id="refresh" type="button">Refresh</button>
+          <button id="runSla" class="secondary" type="button">Run SLA Job</button>
+        </div>
+      </section>
+
+      <form id="createForm">
+        <h2>Create Incident</h2>
+        <label>Title
+          <input id="title" required value="API latency spike">
+        </label>
+        <label>Severity
+          <select id="severity">
+            <option value="critical">critical</option>
+            <option value="high">high</option>
+            <option value="medium">medium</option>
+            <option value="low">low</option>
+          </select>
+        </label>
+        <label>Assignee Email
+          <input id="assigneeEmail" type="email" value="oncall@example.com">
+        </label>
+        <label>SLA Due At
+          <input id="slaDueAt" type="datetime-local" required>
+        </label>
+        <button type="submit">Create</button>
+      </form>
+    </div>
+
+    <div class="layout-stack">
+      <section>
+        <h2>Incidents</h2>
+        <div id="message" class="message" role="status"></div>
+        <table>
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Severity</th>
+              <th>Status</th>
+              <th>Assignee</th>
+              <th>SLA Due</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="incidentRows"></tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>Audit Log</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Action</th>
+              <th>Incident</th>
+              <th>User</th>
+            </tr>
+          </thead>
+          <tbody id="auditRows"></tbody>
+        </table>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const fields = {
+      tenantId: document.querySelector("#tenantId"),
+      userId: document.querySelector("#userId"),
+      role: document.querySelector("#role"),
+      title: document.querySelector("#title"),
+      severity: document.querySelector("#severity"),
+      assigneeEmail: document.querySelector("#assigneeEmail"),
+      slaDueAt: document.querySelector("#slaDueAt")
+    };
+    const message = document.querySelector("#message");
+    const incidentRows = document.querySelector("#incidentRows");
+    const auditRows = document.querySelector("#auditRows");
+
+    fields.slaDueAt.value = new Date(Date.now() + 45 * 60 * 1000).toISOString().slice(0, 16);
+    document.querySelector("#refresh").addEventListener("click", refresh);
+    document.querySelector("#runSla").addEventListener("click", runSla);
+    document.querySelector("#createForm").addEventListener("submit", createIncident);
+
+    function headers() {
+      return {
+        "content-type": "application/json",
+        "x-tenant-id": fields.tenantId.value,
+        "x-user-id": fields.userId.value,
+        "x-role": fields.role.value
+      };
+    }
+
+    async function api(path, options = {}) {
+      const response = await fetch(path, { ...options, headers: { ...headers(), ...(options.headers || {}) } });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error?.message || data.error?.code || "request failed");
+      return data;
+    }
+
+    async function createIncident(event) {
+      event.preventDefault();
+      await run(async () => {
+        await api("/api/incidents", {
+          method: "POST",
+          body: JSON.stringify({
+            title: fields.title.value,
+            severity: fields.severity.value,
+            assigneeEmail: fields.assigneeEmail.value,
+            slaDueAt: new Date(fields.slaDueAt.value).toISOString()
+          })
+        });
+        await refresh();
+      });
+    }
+
+    async function updateStatus(id, status) {
+      await run(async () => {
+        await api(`/api/incidents/${id}/status`, { method: "PATCH", body: JSON.stringify({ status }) });
+        await refresh();
+      });
+    }
+
+    async function assign(id) {
+      const assigneeEmail = prompt("Assignee email");
+      if (!assigneeEmail) return;
+      await run(async () => {
+        await api(`/api/incidents/${id}/assign`, { method: "PATCH", body: JSON.stringify({ assigneeEmail }) });
+        await refresh();
+      });
+    }
+
+    async function runSla() {
+      await run(async () => {
+        const result = await api("/api/jobs/sla-reminders/run", { method: "POST" });
+        message.textContent = `SLA reminders sent: ${result.reminded}`;
+        await refresh(false);
+      });
+    }
+
+    async function refresh(clearMessage = true) {
+      await run(async () => {
+        const [incidentData, auditData] = await Promise.all([
+          api("/api/incidents"),
+          api("/api/audit-log")
+        ]);
+        renderIncidents(incidentData.incidents);
+        renderAudit(auditData.entries);
+        if (clearMessage) message.textContent = "";
+      });
+    }
+
+    function renderIncidents(incidents) {
+      incidentRows.innerHTML = incidents.map((incident) => `
+        <tr>
+          <td>${escapeHtml(incident.title)}<br><small>${incident.id}</small></td>
+          <td><span class="badge ${incident.severity}">${incident.severity}</span></td>
+          <td><span class="badge status">${incident.status}</span></td>
+          <td>${escapeHtml(incident.assigneeEmail || "Unassigned")}</td>
+          <td>${formatDate(incident.slaDueAt)}</td>
+          <td>
+            <div class="actions">
+              ${incident.status === "open" ? `<button class="secondary" onclick="updateStatus('${incident.id}', 'investigating')">Investigate</button>` : ""}
+              ${incident.status !== "resolved" ? `<button class="secondary" onclick="updateStatus('${incident.id}', 'resolved')">Resolve</button>` : ""}
+              <button class="secondary" onclick="assign('${incident.id}')">Assign</button>
+            </div>
+          </td>
+        </tr>
+      `).join("");
+    }
+
+    function renderAudit(entries) {
+      auditRows.innerHTML = entries.map((entry) => `
+        <tr>
+          <td>${formatDate(entry.createdAt)}</td>
+          <td>${entry.action}</td>
+          <td>${entry.incidentId}</td>
+          <td>${escapeHtml(entry.userId)} (${entry.role})</td>
+        </tr>
+      `).join("");
+    }
+
+    async function run(work) {
+      try {
+        await work();
+      } catch (error) {
+        message.textContent = error.message;
+      }
+    }
+
+    function formatDate(value) {
+      return new Date(value).toLocaleString();
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, (char) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      }[char]));
+    }
+
+    window.updateStatus = updateStatus;
+    window.assign = assign;
+    refresh();
+  </script>
+</body>
+</html>

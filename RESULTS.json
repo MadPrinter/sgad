@@ -1,0 +1,257 @@
+[
+  {
+    "variant": "variants/openspec",
+    "score": 83,
+    "total": 100,
+    "percent": 83,
+    "tests": {
+      "status": 0,
+      "stdout": "✔ creates, lists, reads, and audits incidents within one tenant (39.0582ms)\n✔ enforces tenant isolation for reads, writes, and audit log (16.4414ms)\n✔ applies RBAC for admin, responder, and viewer (8.9171ms)\n✔ validates create payload and allowed status transitions (9.3172ms)\n✔ runs SLA reminder job with injectable notifier and no duplicate reminders (13.5675ms)\nℹ tests 5\nℹ suites 0\nℹ pass 5\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 207.6024\n",
+      "stderr": ""
+    },
+    "checks": [
+      {
+        "name": "tests pass",
+        "pass": true,
+        "points": 25,
+        "earned": 25
+      },
+      {
+        "name": "server exports createServer",
+        "pass": true,
+        "points": 3,
+        "earned": 3
+      },
+      {
+        "name": "incident API implemented",
+        "pass": true,
+        "points": 8,
+        "earned": 8
+      },
+      {
+        "name": "tenant isolation implemented",
+        "pass": true,
+        "points": 8,
+        "earned": 8
+      },
+      {
+        "name": "RBAC implemented",
+        "pass": true,
+        "points": 8,
+        "earned": 8
+      },
+      {
+        "name": "audit log implemented",
+        "pass": true,
+        "points": 8,
+        "earned": 8
+      },
+      {
+        "name": "SLA reminder job implemented",
+        "pass": true,
+        "points": 8,
+        "earned": 8
+      },
+      {
+        "name": "frontend implemented",
+        "pass": true,
+        "points": 5,
+        "earned": 5
+      },
+      {
+        "name": "migration or data model documented",
+        "pass": true,
+        "points": 5,
+        "earned": 5
+      },
+      {
+        "name": "OpenSpec docs",
+        "pass": true,
+        "points": 5,
+        "earned": 5
+      },
+      {
+        "name": "Superpowers docs",
+        "pass": false,
+        "points": 5,
+        "earned": 0
+      },
+      {
+        "name": "SGAD governance docs",
+        "pass": false,
+        "points": 12,
+        "earned": 0
+      }
+    ]
+  },
+  {
+    "variant": "variants/superpowers",
+    "score": 78,
+    "total": 100,
+    "percent": 78,
+    "tests": {
+      "status": 0,
+      "stdout": "▶ Incident Response Center API\n  ✔ creates, lists, reads, assigns, resolves, and audits incidents inside one tenant (33.1461ms)\n  ✔ validates create payloads and allowed status transitions (6.0601ms)\n  ✔ enforces RBAC for viewer, responder resolve, audit, create, and job operations (7.0857ms)\n  ✔ isolates tenants for list, read, audit, and SLA reminders (5.3755ms)\n  ✔ runs SLA reminder job only for unresolved incidents due within one hour and does not duplicate reminders (6.0152ms)\n  ✔ serves health and the static frontend (3.2451ms)\n✔ Incident Response Center API (65.1999ms)\nℹ tests 6\nℹ suites 1\nℹ pass 6\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 198.1921\n",
+      "stderr": ""
+    },
+    "checks": [
+      {
+        "name": "tests pass",
+        "pass": true,
+        "points": 25,
+        "earned": 25
+      },
+      {
+        "name": "server exports createServer",
+        "pass": true,
+        "points": 3,
+        "earned": 3
+      },
+      {
+        "name": "incident API implemented",
+        "pass": true,
+        "points": 8,
+        "earned": 8
+      },
+      {
+        "name": "tenant isolation implemented",
+        "pass": true,
+        "points": 8,
+        "earned": 8
+      },
+      {
+        "name": "RBAC implemented",
+        "pass": true,
+        "points": 8,
+        "earned": 8
+      },
+      {
+        "name": "audit log implemented",
+        "pass": true,
+        "points": 8,
+        "earned": 8
+      },
+      {
+        "name": "SLA reminder job implemented",
+        "pass": true,
+        "points": 8,
+        "earned": 8
+      },
+      {
+        "name": "frontend implemented",
+        "pass": true,
+        "points": 5,
+        "earned": 5
+      },
+      {
+        "name": "migration or data model documented",
+        "pass": false,
+        "points": 5,
+        "earned": 0
+      },
+      {
+        "name": "OpenSpec docs",
+        "pass": false,
+        "points": 5,
+        "earned": 0
+      },
+      {
+        "name": "Superpowers docs",
+        "pass": true,
+        "points": 5,
+        "earned": 5
+      },
+      {
+        "name": "SGAD governance docs",
+        "pass": false,
+        "points": 12,
+        "earned": 0
+      }
+    ]
+  },
+  {
+    "variant": "variants/sgad",
+    "score": 95,
+    "total": 100,
+    "percent": 95,
+    "tests": {
+      "status": 0,
+      "stdout": "▶ Incident Response Center API\n  ✔ reports health for the sgad variant (17.9321ms)\n  ✔ creates an incident with validation and writes audit evidence (8.9735ms)\n  ✔ enforces tenant isolation for list and read operations (6.6995ms)\n  ✔ enforces role permissions (5.4928ms)\n  ✔ updates assignee and status only through allowed transitions (13.6954ms)\n  ✔ runs SLA reminders with injectable notifier and no duplicates (8.9573ms)\n✔ Incident Response Center API (74.7677ms)\nℹ tests 6\nℹ suites 1\nℹ pass 6\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 200.6291\n",
+      "stderr": ""
+    },
+    "checks": [
+      {
+        "name": "tests pass",
+        "pass": true,
+        "points": 25,
+        "earned": 25
+      },
+      {
+        "name": "server exports createServer",
+        "pass": true,
+        "points": 3,
+        "earned": 3
+      },
+      {
+        "name": "incident API implemented",
+        "pass": true,
+        "points": 8,
+        "earned": 8
+      },
+      {
+        "name": "tenant isolation implemented",
+        "pass": true,
+        "points": 8,
+        "earned": 8
+      },
+      {
+        "name": "RBAC implemented",
+        "pass": true,
+        "points": 8,
+        "earned": 8
+      },
+      {
+        "name": "audit log implemented",
+        "pass": true,
+        "points": 8,
+        "earned": 8
+      },
+      {
+        "name": "SLA reminder job implemented",
+        "pass": true,
+        "points": 8,
+        "earned": 8
+      },
+      {
+        "name": "frontend implemented",
+        "pass": true,
+        "points": 5,
+        "earned": 5
+      },
+      {
+        "name": "migration or data model documented",
+        "pass": true,
+        "points": 5,
+        "earned": 5
+      },
+      {
+        "name": "OpenSpec docs",
+        "pass": true,
+        "points": 5,
+        "earned": 5
+      },
+      {
+        "name": "Superpowers docs",
+        "pass": false,
+        "points": 5,
+        "earned": 0
+      },
+      {
+        "name": "SGAD governance docs",
+        "pass": true,
+        "points": 12,
+        "earned": 12
+      }
+    ]
+  }
+]

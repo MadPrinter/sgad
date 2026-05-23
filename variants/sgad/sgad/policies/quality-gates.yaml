@@ -1,0 +1,45 @@
+version: 1
+variant: sgad
+change: incident-response-center
+gates:
+  zero_external_dependencies:
+    required: true
+    evidence:
+      - package.json
+  executable_tests:
+    required: true
+    command: node --test
+  tenant_isolation:
+    required: true
+    evidence:
+      - test/server.test.js
+  rbac:
+    required: true
+    evidence:
+      - src/server.js
+      - test/server.test.js
+  audit_log:
+    required: true
+    actions:
+      - incident.created
+      - incident.assigned
+      - incident.status_changed
+      - incident.sla_reminder_sent
+  sla_notifier:
+    required: true
+    injectable: true
+    duplicate_reminders_allowed: false
+  documentation:
+    required: true
+    openspec:
+      - openspec/changes/incident-response-center/proposal.md
+      - openspec/changes/incident-response-center/spec.md
+      - openspec/changes/incident-response-center/design.md
+      - openspec/changes/incident-response-center/tasks.md
+      - openspec/changes/incident-response-center/test-plan.md
+    sgad:
+      - sgad/risk-register.md
+      - sgad/evidence-matrix.md
+      - sgad/autonomy-budget.md
+      - sgad/rollout.md
+      - sgad/policies/quality-gates.yaml

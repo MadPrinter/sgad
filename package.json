@@ -1,0 +1,13 @@
+{
+  "name": "sgad",
+  "version": "0.1.0",
+  "description": "Spec-Governed Agentic Development: AI development governance framework and runnable comparison experiment.",
+  "type": "module",
+  "scripts": {
+    "evaluate": "node tools/evaluate-all.js",
+    "test:openspec": "cd variants/openspec && node --test",
+    "test:superpowers": "cd variants/superpowers && node --test",
+    "test:sgad": "cd variants/sgad && node --test"
+  },
+  "license": "MIT"
+}
