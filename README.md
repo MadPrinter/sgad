@@ -162,6 +162,12 @@ Open `experiments/saas-page/compare.html` for the side-by-side visual comparison
 | Superpowers | 95/110 | 86% |
 | SGAD v0.3 | 105/110 | 95% |
 
+### Visual Output
+
+| OpenSpec | Superpowers | SGAD v0.3 |
+|---|---|---|
+| [![OpenSpec SaaS page](experiments/saas-page/screenshots/openspec.png)](experiments/saas-page/variants/openspec/public/index.html) | [![Superpowers SaaS page](experiments/saas-page/screenshots/superpowers.png)](experiments/saas-page/variants/superpowers/public/index.html) | [![SGAD SaaS page](experiments/saas-page/screenshots/sgad.png)](experiments/saas-page/variants/sgad/public/index.html) |
+
 See [experiments/saas-page/REPORT.md](experiments/saas-page/REPORT.md).
 
 ## Commands

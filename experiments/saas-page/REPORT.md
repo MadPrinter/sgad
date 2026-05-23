@@ -25,6 +25,12 @@ Build a polished operational SaaS dashboard for AI platform teams:
 | Superpowers | 95/110 | 86% | strong execution, TDD, and review workflow | no durable DESIGN.md or UI evidence matrix |
 | SGAD v0.3 | 105/110 | 95% | design context, R2-UI risk, evidence matrix, design review | higher ceremony for UI work |
 
+## Visual Output
+
+| OpenSpec | Superpowers | SGAD v0.3 |
+|---|---|---|
+| [![OpenSpec SaaS page](screenshots/openspec.png)](variants/openspec/public/index.html) | [![Superpowers SaaS page](screenshots/superpowers.png)](variants/superpowers/public/index.html) | [![SGAD SaaS page](screenshots/sgad.png)](variants/sgad/public/index.html) |
+
 ## Interpretation
 
 All three variants can produce a competent SaaS page when the requirements are clear.

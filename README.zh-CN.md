@@ -156,6 +156,12 @@ experiments/saas-page/variants/sgad/public/index.html
 | Superpowers | 95/110 | 86% |
 | SGAD v0.3 | 105/110 | 95% |
 
+### 界面输出
+
+| OpenSpec | Superpowers | SGAD v0.3 |
+|---|---|---|
+| [![OpenSpec SaaS page](experiments/saas-page/screenshots/openspec.png)](experiments/saas-page/variants/openspec/public/index.html) | [![Superpowers SaaS page](experiments/saas-page/screenshots/superpowers.png)](experiments/saas-page/variants/superpowers/public/index.html) | [![SGAD SaaS page](experiments/saas-page/screenshots/sgad.png)](experiments/saas-page/variants/sgad/public/index.html) |
+
 详见 [experiments/saas-page/REPORT.md](experiments/saas-page/REPORT.md)。
 
 ## 命令

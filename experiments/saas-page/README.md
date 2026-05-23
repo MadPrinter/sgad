@@ -38,6 +38,12 @@ Use `compare.html` to see all three interfaces embedded side by side.
 | Superpowers | 95/110 | 86% |
 | SGAD v0.3 | 105/110 | 95% |
 
+## Visual Output
+
+| OpenSpec | Superpowers | SGAD v0.3 |
+|---|---|---|
+| [![OpenSpec SaaS page](screenshots/openspec.png)](variants/openspec/public/index.html) | [![Superpowers SaaS page](screenshots/superpowers.png)](variants/superpowers/public/index.html) | [![SGAD SaaS page](screenshots/sgad.png)](variants/sgad/public/index.html) |
+
 See [REPORT.md](REPORT.md).
 
 ## Variants
