@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SentinelOps Control Plane</title>
+  <style>
+    :root {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #172033;
+      background: #f6f8fb;
+      --page: #f6f8fb;
+      --surface: #ffffff;
+      --surface-strong: #f8fafc;
+      --ink: #172033;
+      --muted: #64748b;
+      --line: #dbe3ef;
+      --nav: #101820;
+      --blue: #2563eb;
+      --cyan: #0891b2;
+      --green: #16803c;
+      --amber: #b45309;
+      --red: #b91c1c;
+      --violet: #6d28d9;
+      --radius: 8px;
+      --shadow: 0 18px 46px rgba(15, 23, 42, .11);
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; background: var(--page); }
+    button, input, select { font: inherit; }
+    button:focus-visible, a:focus-visible, input:focus-visible { outline: 3px solid #38bdf8; outline-offset: 3px; }
+    .shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 256px minmax(0, 1fr);
+    }
+    .sidebar {
+      background: var(--nav);
+      color: #f8fafc;
+      padding: 22px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 4px 4px 8px;
+    }
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: conic-gradient(from 140deg, #38bdf8, #22c55e, #f59e0b, #38bdf8);
+      box-shadow: inset 0 0 0 6px rgba(15, 23, 42, .32);
+    }
+    .brand strong { display: block; font-size: 18px; }
+    .brand span { color: #9fb3c8; font-size: 12px; }
+    .nav { display: grid; gap: 6px; }
+    .nav a {
+      color: #cbd5e1;
+      text-decoration: none;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-weight: 700;
+    }
+    .nav a.active { color: #ffffff; background: #1f2937; }
+    .nav a:hover { color: #ffffff; background: #243244; }
+    .sidebar-footer {
+      margin-top: auto;
+      border: 1px solid rgba(148, 163, 184, .22);
+      border-radius: 8px;
+      padding: 12px;
+      color: #cbd5e1;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    main { padding: 24px clamp(18px, 4vw, 44px) 44px; }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+    .topbar h1 { margin: 0; font-size: 18px; letter-spacing: 0; }
+    .actions { display: flex; gap: 10px; align-items: center; }
+    .search {
+      width: min(420px, 42vw);
+      min-width: 220px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px 12px;
+      background: #ffffff;
+    }
+    button {
+      border: 0;
+      border-radius: 8px;
+      padding: 10px 13px;
+      font-weight: 850;
+      cursor: pointer;
+      color: #ffffff;
+      background: var(--blue);
+    }
+    button.secondary { color: var(--ink); background: #e2e8f0; }
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(280px, .75fr);
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+    .hero-primary {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      padding: clamp(22px, 4vw, 34px);
+      color: #f8fafc;
+      background:
+        linear-gradient(135deg, rgba(15, 23, 42, .96), rgba(30, 64, 99, .94)),
+        linear-gradient(90deg, #0f172a, #0e7490);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-primary::after {
+      content: "";
+      position: absolute;
+      inset: auto -80px -120px auto;
+      width: 340px;
+      height: 260px;
+      border: 1px solid rgba(125, 211, 252, .42);
+      transform: rotate(-12deg);
+      border-radius: 36px;
+    }
+    .eyebrow { color: #7dd3fc; font-weight: 850; font-size: 13px; text-transform: uppercase; letter-spacing: .08em; }
+    .hero h2 {
+      margin: 12px 0 0;
+      max-width: 760px;
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+    .hero p { margin: 14px 0 0; color: #cbd5e1; line-height: 1.6; max-width: 720px; }
+    .confidence-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      padding: 22px;
+    }
+    .confidence-card h2 { margin: 0; font-size: 18px; }
+    .score { font-size: 66px; font-weight: 900; letter-spacing: 0; color: var(--green); margin-top: 14px; }
+    .mini-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
+    .mini { background: var(--surface-strong); border: 1px solid var(--line); border-radius: 8px; padding: 10px; }
+    .mini span { display: block; color: var(--muted); font-size: 12px; }
+    .mini strong { display: block; margin-top: 4px; }
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 26px rgba(15, 23, 42, .07);
+      padding: 18px;
+    }
+    .kpi-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; color: var(--muted); font-size: 13px; font-weight: 800; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--blue); }
+    .dot.green { background: var(--green); }
+    .dot.amber { background: var(--amber); }
+    .dot.red { background: var(--red); }
+    .metric { display: block; font-size: 34px; font-weight: 900; margin-top: 8px; color: var(--ink); }
+    .delta { color: var(--muted); font-size: 13px; margin-top: 6px; }
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(320px, .8fr);
+      gap: 18px;
+    }
+    .section-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .section-head h2 { margin: 0; font-size: 18px; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td { padding: 12px 8px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: middle; }
+    th { color: var(--muted); text-transform: uppercase; font-size: 12px; letter-spacing: .04em; }
+    .agent { display: flex; align-items: center; gap: 10px; font-weight: 800; }
+    .avatar { width: 30px; height: 30px; border-radius: 8px; background: #e0f2fe; display: grid; place-items: center; color: #075985; font-weight: 900; }
+    .pill { display: inline-flex; align-items: center; border-radius: 999px; padding: 4px 9px; font-size: 12px; font-weight: 900; white-space: nowrap; }
+    .ok { color: #166534; background: #dcfce7; }
+    .warn { color: #92400e; background: #fef3c7; }
+    .bad { color: #991b1b; background: #fee2e2; }
+    .info { color: #075985; background: #e0f2fe; }
+    .gate-stack { display: grid; gap: 10px; }
+    .gate {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+    }
+    .gate small { color: var(--muted); display: block; margin-top: 3px; }
+    .timeline { display: grid; gap: 12px; margin-top: 18px; }
+    .event { display: grid; grid-template-columns: 76px 1fr; gap: 12px; align-items: start; }
+    .event time { color: var(--muted); font-size: 13px; font-weight: 800; }
+    .event div { border-left: 3px solid var(--cyan); padding-left: 12px; color: var(--muted); line-height: 1.45; }
+    .event strong { color: var(--ink); }
+    @media (max-width: 980px) {
+      .shell { grid-template-columns: 1fr; }
+      .sidebar { display: block; }
+      .nav { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 16px; }
+      .sidebar-footer { display: none; }
+      .hero, .workspace { grid-template-columns: 1fr; }
+      .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 620px) {
+      main { padding: 16px; }
+      .topbar, .actions { align-items: stretch; flex-direction: column; }
+      .search { width: 100%; min-width: 0; }
+      .nav { grid-template-columns: 1fr 1fr; }
+      .hero h2 { font-size: 34px; }
+      .kpis, .mini-grid { grid-template-columns: 1fr; }
+      .event { grid-template-columns: 1fr; }
+      table { font-size: 13px; }
+      th, td { padding: 10px 6px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar" aria-label="Primary navigation">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <div><strong>SentinelOps</strong><span>Agent control plane</span></div>
+      </div>
+      <nav class="nav">
+        <a class="active" href="#">Overview</a>
+        <a href="#">Agents</a>
+        <a href="#">Reviews</a>
+        <a href="#">Governance Gates</a>
+        <a href="#">Evidence</a>
+        <a href="#">Rollout</a>
+      </nav>
+      <div class="sidebar-footer">R2-UI dashboard governed by DESIGN.md, screenshot evidence, responsive review, and accessibility checks.</div>
+    </aside>
+    <main>
+      <header class="topbar">
+        <h1>Operations Overview</h1>
+        <div class="actions">
+          <input class="search" aria-label="Search agents, changes, and evidence" placeholder="Search agents, changes, evidence">
+          <button class="secondary" aria-label="Open design review">Design review</button>
+          <button aria-label="Create rollout report">Create report</button>
+        </div>
+      </header>
+      <section class="hero" aria-label="Live operational state">
+        <div class="hero-primary">
+          <div class="eyebrow">Live agent governance</div>
+          <h2>Every autonomous change has a gate, an owner, and proof.</h2>
+          <p>SentinelOps gives AI platform teams a dense SaaS control plane for active agents, blocked work, design governance, rollout confidence, and audit-ready evidence.</p>
+        </div>
+        <div class="confidence-card">
+          <h2>Rollout Confidence</h2>
+          <div class="score">96%</div>
+          <p class="delta">+5% after design evidence and rollback notes were attached.</p>
+          <div class="mini-grid">
+            <div class="mini"><span>Evidence</span><strong>31 linked</strong></div>
+            <div class="mini"><span>R2-UI checks</span><strong>4 / 4 pass</strong></div>
+            <div class="mini"><span>Viewport review</span><strong>desktop + mobile</strong></div>
+            <div class="mini"><span>Accessibility</span><strong>focus verified</strong></div>
+          </div>
+        </div>
+      </section>
+      <section class="kpis" aria-label="Key metrics">
+        <div class="card"><div class="kpi-top"><span>Active Agents</span><i class="dot green"></i></div><strong class="metric">64</strong><p class="delta">12 shipping behind gates</p></div>
+        <div class="card"><div class="kpi-top"><span>Blocked Tasks</span><i class="dot amber"></i></div><strong class="metric">6</strong><p class="delta">3 need human review</p></div>
+        <div class="card"><div class="kpi-top"><span>Gate Failures</span><i class="dot red"></i></div><strong class="metric">2</strong><p class="delta">both missing evidence</p></div>
+        <div class="card"><div class="kpi-top"><span>Confidence</span><i class="dot"></i></div><strong class="metric">96%</strong><p class="delta">release train Atlas-18</p></div>
+      </section>
+      <section class="workspace">
+        <div class="card">
+          <div class="section-head"><h2>Agent Activity</h2><button class="secondary" aria-label="Filter agent activity">Filter</button></div>
+          <table>
+            <thead><tr><th>Agent</th><th>Status</th><th>Task</th><th>Risk</th><th>Evidence</th></tr></thead>
+            <tbody>
+              <tr><td><span class="agent"><span class="avatar">S</span>Spec Runner</span></td><td><span class="pill ok">Verified</span></td><td>Contract update</td><td>R1</td><td>tests linked</td></tr>
+              <tr><td><span class="agent"><span class="avatar">D</span>Design Steward</span></td><td><span class="pill info">Reviewing</span></td><td>Dashboard polish</td><td>R2-UI</td><td>screenshots attached</td></tr>
+              <tr><td><span class="agent"><span class="avatar">G</span>Gatekeeper</span></td><td><span class="pill warn">Waiting</span></td><td>RBAC approval</td><td>R3</td><td>human review</td></tr>
+              <tr><td><span class="agent"><span class="avatar">R</span>Release Pilot</span></td><td><span class="pill ok">Running</span></td><td>Canary rollout</td><td>R2</td><td>rollback ready</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card">
+          <h2>Governance Gates</h2>
+          <div class="gate-stack">
+            <div class="gate"><span>Spec approved<small>OpenSpec artifacts complete</small></span><span class="pill ok">Pass</span></div>
+            <div class="gate"><span>Design review<small>DESIGN.md and R2-UI evidence</small></span><span class="pill ok">Pass</span></div>
+            <div class="gate"><span>Evidence matrix<small>Requirement to proof linked</small></span><span class="pill ok">Pass</span></div>
+            <div class="gate"><span>Rollout approval<small>Canary and rollback documented</small></span><span class="pill warn">Review</span></div>
+          </div>
+          <div class="timeline" aria-label="Rollout Evidence timeline">
+            <h2>Rollout Evidence</h2>
+            <div class="event"><time>09:10</time><div><strong>Spec</strong> dashboard requirements mapped to tasks.</div></div>
+            <div class="event"><time>10:05</time><div><strong>Design</strong> desktop and mobile states reviewed against DESIGN.md.</div></div>
+            <div class="event"><time>10:42</time><div><strong>Access</strong> focus states and labels verified.</div></div>
+            <div class="event"><time>11:16</time><div><strong>Rollout</strong> canary batch waiting for owner sign-off.</div></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

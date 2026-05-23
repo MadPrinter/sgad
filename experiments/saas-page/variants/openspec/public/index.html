@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AgentOps Command Center</title>
+  <style>
+    :root {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #14213d;
+      background: #eef3f8;
+      --surface: #ffffff;
+      --ink: #14213d;
+      --muted: #5f6f89;
+      --line: #d9e2ef;
+      --blue: #2563eb;
+      --cyan: #0891b2;
+      --green: #15803d;
+      --amber: #b45309;
+      --red: #b91c1c;
+      --radius: 10px;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .10);
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; }
+    button, input { font: inherit; }
+    button:focus-visible, a:focus-visible { outline: 3px solid #38bdf8; outline-offset: 3px; }
+    .shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 252px minmax(0, 1fr);
+    }
+    .sidebar {
+      padding: 24px 18px;
+      background: linear-gradient(180deg, #102a43 0%, #17324d 100%);
+      color: #f8fafc;
+    }
+    .brand { display: grid; gap: 4px; margin-bottom: 28px; }
+    .brand strong { font-size: 20px; }
+    .brand span { color: #bae6fd; font-size: 13px; }
+    .nav { display: grid; gap: 8px; }
+    .nav a {
+      color: #dbeafe;
+      text-decoration: none;
+      padding: 10px 12px;
+      border-radius: 8px;
+      display: block;
+    }
+    .nav a.active { background: rgba(56, 189, 248, .16); color: #ffffff; }
+    main { padding: 28px clamp(18px, 4vw, 44px) 44px; }
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) 360px;
+      gap: 20px;
+      align-items: stretch;
+      margin-bottom: 22px;
+    }
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 20px;
+    }
+    h1, h2, p { margin: 0; }
+    h1 { font-size: clamp(28px, 4vw, 46px); line-height: 1.02; letter-spacing: 0; }
+    h2 { font-size: 18px; margin-bottom: 14px; }
+    .lede { color: var(--muted); margin-top: 12px; line-height: 1.6; max-width: 720px; }
+    .status-card {
+      background: linear-gradient(135deg, #e0f2fe, #ecfdf5);
+      border: 1px solid #bae6fd;
+    }
+    .confidence { font-size: 58px; font-weight: 850; color: #075985; margin-top: 16px; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+    .kpi span { color: var(--muted); font-size: 13px; }
+    .kpi strong { display: block; font-size: 30px; margin-top: 8px; }
+    .content {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(300px, .8fr);
+      gap: 18px;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td { border-bottom: 1px solid var(--line); padding: 12px 8px; text-align: left; }
+    th { color: var(--muted); font-size: 12px; text-transform: uppercase; }
+    .pill { border-radius: 999px; padding: 4px 9px; font-weight: 800; font-size: 12px; display: inline-flex; }
+    .ok { background: #dcfce7; color: var(--green); }
+    .warn { background: #fef3c7; color: var(--amber); }
+    .bad { background: #fee2e2; color: var(--red); }
+    .gate { display: grid; gap: 12px; }
+    .gate-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+    }
+    .timeline { display: grid; gap: 12px; margin-top: 14px; }
+    .event { border-left: 3px solid var(--blue); padding-left: 12px; color: var(--muted); }
+    .toolbar { display: flex; justify-content: space-between; gap: 12px; align-items: center; margin-bottom: 12px; }
+    button {
+      border: 0;
+      border-radius: 8px;
+      background: #2563eb;
+      color: #ffffff;
+      padding: 10px 14px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    @media (max-width: 860px) {
+      .shell { grid-template-columns: 1fr; }
+      .sidebar { position: static; }
+      .hero, .content { grid-template-columns: 1fr; }
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 560px) {
+      main { padding: 18px; }
+      .grid { grid-template-columns: 1fr; }
+      h1 { font-size: 30px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar" aria-label="Primary navigation">
+      <div class="brand"><strong>AgentOps</strong><span>Command Center</span></div>
+      <nav class="nav">
+        <a class="active" href="#">Overview</a>
+        <a href="#">Agents</a>
+        <a href="#">Governance Gates</a>
+        <a href="#">Evidence</a>
+        <a href="#">Rollout</a>
+      </nav>
+    </aside>
+    <main>
+      <section class="hero" aria-label="Operational summary">
+        <div class="panel">
+          <h1>Autonomous agent operations without losing control.</h1>
+          <p class="lede">Monitor active agents, blocked tasks, governance gates, rollout confidence, and evidence trails from one operational SaaS cockpit.</p>
+        </div>
+        <div class="panel status-card">
+          <h2>Rollout Confidence</h2>
+          <p class="confidence">94%</p>
+          <p class="lede">Evidence complete for release train Atlas-17.</p>
+        </div>
+      </section>
+      <section class="grid" aria-label="Key metrics">
+        <div class="panel kpi"><span>Active Agents</span><strong>42</strong></div>
+        <div class="panel kpi"><span>Blocked Tasks</span><strong>7</strong></div>
+        <div class="panel kpi"><span>Gate Failures</span><strong>3</strong></div>
+        <div class="panel kpi"><span>Confidence</span><strong>94%</strong></div>
+      </section>
+      <section class="content">
+        <div class="panel">
+          <div class="toolbar"><h2>Agent Activity</h2><button aria-label="Export agent activity">Export</button></div>
+          <table>
+            <thead><tr><th>Agent</th><th>Status</th><th>Task</th><th>Risk</th></tr></thead>
+            <tbody>
+              <tr><td>Spec Runner</td><td><span class="pill ok">Verified</span></td><td>API contract update</td><td>R1</td></tr>
+              <tr><td>Gatekeeper</td><td><span class="pill warn">Review</span></td><td>RBAC policy diff</td><td>R3</td></tr>
+              <tr><td>Release Pilot</td><td><span class="pill ok">Running</span></td><td>Canary rollout</td><td>R2</td></tr>
+              <tr><td>UI Steward</td><td><span class="pill bad">Blocked</span></td><td>Missing screenshot evidence</td><td>R2-UI</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="panel">
+          <h2>Governance Gates</h2>
+          <div class="gate">
+            <div class="gate-row"><span>Spec approved</span><span class="pill ok">Pass</span></div>
+            <div class="gate-row"><span>Evidence matrix</span><span class="pill ok">Pass</span></div>
+            <div class="gate-row"><span>Design review</span><span class="pill warn">Needs screenshot</span></div>
+            <div class="gate-row"><span>Rollback plan</span><span class="pill ok">Pass</span></div>
+          </div>
+          <div class="timeline" aria-label="Rollout Evidence timeline">
+            <h2>Rollout Evidence</h2>
+            <div class="event">10:20 Spec diff linked to tests.</div>
+            <div class="event">10:44 Accessibility review completed.</div>
+            <div class="event">11:05 Canary batch approved.</div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

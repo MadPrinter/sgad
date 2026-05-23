@@ -137,10 +137,35 @@ Final score:
 
 See [EXPERIMENT_REPORT.md](EXPERIMENT_REPORT.md) and [RESULTS.json](RESULTS.json).
 
+## SaaS Page Experiment
+
+SGAD v0.3 also includes a UI-heavy experiment: three workflows build the same polished AI Ops SaaS dashboard.
+
+```bash
+npm run evaluate:saas
+```
+
+Open the pages:
+
+```text
+experiments/saas-page/variants/openspec/public/index.html
+experiments/saas-page/variants/superpowers/public/index.html
+experiments/saas-page/variants/sgad/public/index.html
+```
+
+| Variant | Score | Percent |
+|---|---:|---:|
+| OpenSpec | 95/110 | 86% |
+| Superpowers | 95/110 | 86% |
+| SGAD v0.3 | 105/110 | 95% |
+
+See [experiments/saas-page/REPORT.md](experiments/saas-page/REPORT.md).
+
 ## Commands
 
 ```bash
 npm run evaluate        # run all variants and score them
+npm run evaluate:saas   # run the UI-heavy SaaS page experiment
 npm run check           # run SGAD checks plus full evaluation
 npm run test:sgad       # run SGAD variant tests
 sgad init               # scaffold SGAD in the current project

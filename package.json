@@ -9,6 +9,7 @@
   "scripts": {
     "sgad": "node bin/sgad.js",
     "evaluate": "node tools/evaluate-all.js",
+    "evaluate:saas": "node tools/evaluate-saas-page.js",
     "check": "node bin/sgad.js check && node tools/evaluate-all.js",
     "test:openspec": "cd variants/openspec && node --test",
     "test:superpowers": "cd variants/superpowers && node --test",

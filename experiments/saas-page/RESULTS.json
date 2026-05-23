@@ -1,0 +1,257 @@
+[
+  {
+    "variant": "experiments/saas-page/variants/openspec",
+    "score": 95,
+    "total": 110,
+    "percent": 86,
+    "tests": {
+      "status": 0,
+      "stdout": "✔ renders required SaaS dashboard regions (0.6433ms)\n✔ includes responsive and accessible UI basics (0.144ms)\nℹ tests 2\nℹ suites 0\nℹ pass 2\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 186.3108\n",
+      "stderr": ""
+    },
+    "checks": [
+      {
+        "name": "tests pass",
+        "pass": true,
+        "points": 20,
+        "earned": 20
+      },
+      {
+        "name": "SaaS app shell",
+        "pass": true,
+        "points": 8,
+        "earned": 8
+      },
+      {
+        "name": "operational KPIs",
+        "pass": true,
+        "points": 10,
+        "earned": 10
+      },
+      {
+        "name": "agent activity table",
+        "pass": true,
+        "points": 8,
+        "earned": 8
+      },
+      {
+        "name": "governance gates represented",
+        "pass": true,
+        "points": 10,
+        "earned": 10
+      },
+      {
+        "name": "responsive CSS",
+        "pass": true,
+        "points": 10,
+        "earned": 10
+      },
+      {
+        "name": "accessibility basics",
+        "pass": true,
+        "points": 8,
+        "earned": 8
+      },
+      {
+        "name": "visual system tokens",
+        "pass": true,
+        "points": 8,
+        "earned": 8
+      },
+      {
+        "name": "polished SaaS UI density",
+        "pass": true,
+        "points": 8,
+        "earned": 8
+      },
+      {
+        "name": "OpenSpec docs",
+        "pass": true,
+        "points": 5,
+        "earned": 5
+      },
+      {
+        "name": "Superpowers docs",
+        "pass": false,
+        "points": 5,
+        "earned": 0
+      },
+      {
+        "name": "SGAD design governance",
+        "pass": false,
+        "points": 10,
+        "earned": 0
+      }
+    ]
+  },
+  {
+    "variant": "experiments/saas-page/variants/superpowers",
+    "score": 95,
+    "total": 110,
+    "percent": 86,
+    "tests": {
+      "status": 0,
+      "stdout": "✔ covers planned dashboard behavior (0.8736ms)\n✔ has execution-quality UI safeguards (0.2746ms)\nℹ tests 2\nℹ suites 0\nℹ pass 2\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 183.4273\n",
+      "stderr": ""
+    },
+    "checks": [
+      {
+        "name": "tests pass",
+        "pass": true,
+        "points": 20,
+        "earned": 20
+      },
+      {
+        "name": "SaaS app shell",
+        "pass": true,
+        "points": 8,
+        "earned": 8
+      },
+      {
+        "name": "operational KPIs",
+        "pass": true,
+        "points": 10,
+        "earned": 10
+      },
+      {
+        "name": "agent activity table",
+        "pass": true,
+        "points": 8,
+        "earned": 8
+      },
+      {
+        "name": "governance gates represented",
+        "pass": true,
+        "points": 10,
+        "earned": 10
+      },
+      {
+        "name": "responsive CSS",
+        "pass": true,
+        "points": 10,
+        "earned": 10
+      },
+      {
+        "name": "accessibility basics",
+        "pass": true,
+        "points": 8,
+        "earned": 8
+      },
+      {
+        "name": "visual system tokens",
+        "pass": true,
+        "points": 8,
+        "earned": 8
+      },
+      {
+        "name": "polished SaaS UI density",
+        "pass": true,
+        "points": 8,
+        "earned": 8
+      },
+      {
+        "name": "OpenSpec docs",
+        "pass": false,
+        "points": 5,
+        "earned": 0
+      },
+      {
+        "name": "Superpowers docs",
+        "pass": true,
+        "points": 5,
+        "earned": 5
+      },
+      {
+        "name": "SGAD design governance",
+        "pass": false,
+        "points": 10,
+        "earned": 0
+      }
+    ]
+  },
+  {
+    "variant": "experiments/saas-page/variants/sgad",
+    "score": 105,
+    "total": 110,
+    "percent": 95,
+    "tests": {
+      "status": 0,
+      "stdout": "✔ renders governed SaaS dashboard regions (1.4815ms)\n✔ implements design governance UI evidence hooks (0.2765ms)\nℹ tests 2\nℹ suites 0\nℹ pass 2\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 224.7114\n",
+      "stderr": ""
+    },
+    "checks": [
+      {
+        "name": "tests pass",
+        "pass": true,
+        "points": 20,
+        "earned": 20
+      },
+      {
+        "name": "SaaS app shell",
+        "pass": true,
+        "points": 8,
+        "earned": 8
+      },
+      {
+        "name": "operational KPIs",
+        "pass": true,
+        "points": 10,
+        "earned": 10
+      },
+      {
+        "name": "agent activity table",
+        "pass": true,
+        "points": 8,
+        "earned": 8
+      },
+      {
+        "name": "governance gates represented",
+        "pass": true,
+        "points": 10,
+        "earned": 10
+      },
+      {
+        "name": "responsive CSS",
+        "pass": true,
+        "points": 10,
+        "earned": 10
+      },
+      {
+        "name": "accessibility basics",
+        "pass": true,
+        "points": 8,
+        "earned": 8
+      },
+      {
+        "name": "visual system tokens",
+        "pass": true,
+        "points": 8,
+        "earned": 8
+      },
+      {
+        "name": "polished SaaS UI density",
+        "pass": true,
+        "points": 8,
+        "earned": 8
+      },
+      {
+        "name": "OpenSpec docs",
+        "pass": true,
+        "points": 5,
+        "earned": 5
+      },
+      {
+        "name": "Superpowers docs",
+        "pass": false,
+        "points": 5,
+        "earned": 0
+      },
+      {
+        "name": "SGAD design governance",
+        "pass": true,
+        "points": 10,
+        "earned": 10
+      }
+    ]
+  }
+]

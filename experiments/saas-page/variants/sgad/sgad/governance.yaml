@@ -1,0 +1,13 @@
+version: 0.3.0
+risk_class: R2-UI
+optional_tracks:
+  design: true
+gates:
+  require_spec: true
+  require_tests: true
+  require_evidence_matrix: true
+  require_design_review: true
+  require_risk_review_for: [R2, R3, R2-UI, R3-UI]
+approvals:
+  R3: human
+  R3-UI: human

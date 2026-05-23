@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AgentOps Console</title>
+  <style>
+    :root {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #172033;
+      background: #f4f7fb;
+      --surface: #ffffff;
+      --ink: #172033;
+      --muted: #607089;
+      --line: #d8e0ed;
+      --nav: #111827;
+      --blue: #1d4ed8;
+      --teal: #0f766e;
+      --lime: #65a30d;
+      --amber: #b45309;
+      --red: #dc2626;
+      --radius: 8px;
+      --shadow: 0 16px 42px rgba(15, 23, 42, .12);
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    button, input { font: inherit; }
+    button:focus-visible, a:focus-visible { outline: 3px solid #0ea5e9; outline-offset: 2px; }
+    .shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 248px minmax(0, 1fr);
+      background:
+        radial-gradient(circle at 90% 5%, rgba(14, 165, 233, .14), transparent 26%),
+        #f4f7fb;
+    }
+    .sidebar {
+      background: var(--nav);
+      color: #f8fafc;
+      padding: 22px 16px;
+      display: grid;
+      align-content: start;
+      gap: 24px;
+    }
+    .logo { display: flex; align-items: center; gap: 10px; font-weight: 850; font-size: 19px; }
+    .logo-mark { width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg, #0ea5e9, #84cc16); }
+    nav { display: grid; gap: 6px; }
+    nav a {
+      color: #cbd5e1;
+      text-decoration: none;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-weight: 650;
+    }
+    nav a.active, nav a:hover { background: #1f2937; color: #ffffff; }
+    main { padding: 24px clamp(18px, 4vw, 42px) 42px; }
+    .topbar { display: flex; justify-content: space-between; gap: 16px; align-items: center; margin-bottom: 18px; }
+    .search { min-width: min(420px, 100%); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; }
+    h1, h2, p { margin: 0; letter-spacing: 0; }
+    h1 { font-size: clamp(30px, 5vw, 52px); line-height: 1; max-width: 780px; }
+    h2 { font-size: 18px; margin-bottom: 14px; }
+    .hero {
+      padding: 26px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: linear-gradient(135deg, #ffffff 0%, #eff6ff 58%, #ecfdf5 100%);
+      box-shadow: var(--shadow);
+      margin-bottom: 18px;
+    }
+    .hero p { color: var(--muted); margin-top: 12px; max-width: 760px; line-height: 1.55; }
+    .kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-bottom: 18px; }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 26px rgba(15, 23, 42, .07);
+      padding: 18px;
+    }
+    .metric-label { color: var(--muted); font-size: 13px; font-weight: 750; }
+    .metric-value { display: block; color: var(--ink); font-size: 34px; font-weight: 850; margin-top: 8px; }
+    .dashboard { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(310px, .75fr); gap: 18px; }
+    .section-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 12px; }
+    button { border: 0; border-radius: 8px; padding: 10px 13px; background: var(--blue); color: white; font-weight: 800; cursor: pointer; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td { padding: 12px 8px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: middle; }
+    th { color: var(--muted); text-transform: uppercase; font-size: 12px; }
+    .pill { display: inline-flex; border-radius: 999px; padding: 4px 9px; font-size: 12px; font-weight: 850; }
+    .ok { color: #166534; background: #dcfce7; }
+    .warn { color: #92400e; background: #fef3c7; }
+    .bad { color: #991b1b; background: #fee2e2; }
+    .gate-stack { display: grid; gap: 10px; }
+    .gate { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center; border: 1px solid var(--line); border-radius: 8px; padding: 11px; }
+    .timeline { display: grid; gap: 12px; margin-top: 18px; }
+    .event { display: grid; grid-template-columns: 72px 1fr; gap: 12px; color: var(--muted); }
+    .event strong { color: var(--ink); }
+    @media (max-width: 900px) {
+      .shell { grid-template-columns: 1fr; }
+      .sidebar { display: block; }
+      nav { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 14px; }
+      .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .dashboard { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      main { padding: 16px; }
+      .topbar { align-items: stretch; flex-direction: column; }
+      nav { grid-template-columns: 1fr 1fr; }
+      .kpis { grid-template-columns: 1fr; }
+      .event { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar" aria-label="Primary navigation">
+      <div class="logo"><span class="logo-mark"></span><span>AgentOps</span></div>
+      <nav>
+        <a class="active" href="#">Overview</a>
+        <a href="#">Agents</a>
+        <a href="#">Queues</a>
+        <a href="#">Governance Gates</a>
+        <a href="#">Evidence</a>
+        <a href="#">Rollout</a>
+      </nav>
+    </aside>
+    <main>
+      <div class="topbar">
+        <input class="search" aria-label="Search agents and evidence" placeholder="Search agents, gates, evidence">
+        <button aria-label="Create governance report">Create report</button>
+      </div>
+      <section class="hero" aria-label="Live operational state">
+        <h1>Ship agentic systems with real-time operational confidence.</h1>
+        <p>AgentOps Console tracks live agents, blocked tasks, governance gates, rollout evidence, and review handoffs without hiding engineering risk.</p>
+      </section>
+      <section class="kpis" aria-label="Key metrics">
+        <div class="card"><span class="metric-label">Active Agents</span><strong class="metric-value">58</strong></div>
+        <div class="card"><span class="metric-label">Blocked Tasks</span><strong class="metric-value">9</strong></div>
+        <div class="card"><span class="metric-label">Gate Failures</span><strong class="metric-value">4</strong></div>
+        <div class="card"><span class="metric-label">Confidence</span><strong class="metric-value">91%</strong></div>
+      </section>
+      <section class="dashboard">
+        <div class="card">
+          <div class="section-head"><h2>Agent Activity</h2><button aria-label="Filter agent activity">Filter</button></div>
+          <table>
+            <thead><tr><th>Agent</th><th>Status</th><th>Current Task</th><th>Risk</th><th>Owner</th></tr></thead>
+            <tbody>
+              <tr><td>Planner-07</td><td><span class="pill ok">Verified</span></td><td>Spec delta</td><td>R1</td><td>Ada</td></tr>
+              <tr><td>Builder-12</td><td><span class="pill warn">Waiting</span></td><td>Design screenshot</td><td>R2-UI</td><td>Lin</td></tr>
+              <tr><td>Reviewer-03</td><td><span class="pill ok">Approved</span></td><td>Evidence matrix</td><td>R2</td><td>Sam</td></tr>
+              <tr><td>Deployer-02</td><td><span class="pill bad">Blocked</span></td><td>Rollback missing</td><td>R3</td><td>Mira</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card">
+          <h2>Governance Gates</h2>
+          <div class="gate-stack">
+            <div class="gate"><span>Spec approved</span><span class="pill ok">Pass</span></div>
+            <div class="gate"><span>Tests linked</span><span class="pill ok">Pass</span></div>
+            <div class="gate"><span>Evidence review</span><span class="pill warn">Review</span></div>
+            <div class="gate"><span>Rollout approval</span><span class="pill bad">Blocked</span></div>
+          </div>
+          <div class="timeline" aria-label="Rollout Evidence timeline">
+            <h2>Rollout Evidence</h2>
+            <div class="event"><strong>09:30</strong><span>Risk class raised to R2-UI.</span></div>
+            <div class="event"><strong>10:10</strong><span>Responsive inspection completed.</span></div>
+            <div class="event"><strong>11:20</strong><span>Canary rollout waiting on rollback approval.</span></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

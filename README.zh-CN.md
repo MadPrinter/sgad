@@ -131,10 +131,35 @@ tools/                       评估和打分脚本
 
 详见 [EXPERIMENT_REPORT.md](EXPERIMENT_REPORT.md) 和 [RESULTS.json](RESULTS.json)。
 
+## SaaS 页面实验
+
+SGAD v0.3 还包含一个 UI-heavy 实验：三种工作流分别实现同一个 AI Ops SaaS dashboard。
+
+```bash
+npm run evaluate:saas
+```
+
+打开页面：
+
+```text
+experiments/saas-page/variants/openspec/public/index.html
+experiments/saas-page/variants/superpowers/public/index.html
+experiments/saas-page/variants/sgad/public/index.html
+```
+
+| 方案 | 分数 | 百分比 |
+|---|---:|---:|
+| OpenSpec | 95/110 | 86% |
+| Superpowers | 95/110 | 86% |
+| SGAD v0.3 | 105/110 | 95% |
+
+详见 [experiments/saas-page/REPORT.md](experiments/saas-page/REPORT.md)。
+
 ## 命令
 
 ```bash
 npm run evaluate        # 运行全部方案并打分
+npm run evaluate:saas   # 运行 UI-heavy SaaS 页面实验
 npm run check           # 运行 SGAD 检查和完整评估
 npm run test:sgad       # 运行 SGAD 方案测试
 sgad init               # 在当前项目生成 SGAD 治理文件

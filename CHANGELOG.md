@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- SaaS Page Experiment comparing OpenSpec, Superpowers, and SGAD v0.3 on a UI-heavy AI Ops dashboard.
+- `npm run evaluate:saas` evaluator.
+- Three runnable static pages under `experiments/saas-page/variants/`.
+- Experiment report showing SGAD v0.3 at 105/110 versus 95/110 for OpenSpec and Superpowers.
+
 ## v0.3.0 - 2026-05-23
 
 Added optional Design Governance Track inspired by `DESIGN.md` workflows.
