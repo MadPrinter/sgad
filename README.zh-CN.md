@@ -20,6 +20,7 @@ SGAD 补上生产工程里最容易缺失的一层：
 - 发布门禁
 - 人工审批策略
 - 需求到测试到风险的可追溯性
+- 面向 AI 生成 UI 的可选设计治理
 
 ## 快速开始
 
@@ -56,6 +57,8 @@ SGAD = 规格层 + 执行层 + 治理层 + 证据层
 执行层 = plan, TDD, implementation, review, verification
 治理层 = risk class, policies, autonomy budget, rollout gates
 证据层 = requirement -> design -> task -> test -> risk -> proof
+
+可选轨道 = Design, Security, Data, Release
 ```
 
 ## 风险分级
@@ -115,8 +118,30 @@ npm run evaluate        # 运行全部方案并打分
 npm run check           # 运行 SGAD 检查和完整评估
 npm run test:sgad       # 运行 SGAD 方案测试
 sgad init               # 在当前项目生成 SGAD 治理文件
+sgad init --with-design # 生成 SGAD，并启用可选 UI 设计治理
 sgad check              # 检查必需治理产物
 ```
+
+## 可选 Design Track
+
+SGAD 现在支持可选 Design Governance Track，借鉴 `awesome-design-md` 这类 `DESIGN.md` 规范库，但不是强制第五层。
+
+只有涉及 UI 的工作才启用：
+
+```bash
+sgad init --with-design
+```
+
+它会生成：
+
+```text
+design/DESIGN.md
+design/components.md
+design/screenshots/
+sgad/design-review.md
+```
+
+详见 [docs/zh-CN/design-governance.md](docs/zh-CN/design-governance.md)。
 
 运行 SGAD 示例应用：
 
@@ -146,6 +171,6 @@ SGAD 不绑定具体 Agent。Codex、Claude Code、Cursor、OpenCode、Gemini CL
 
 ## 版本
 
-当前版本：`v0.2.0`
+当前版本：`v0.3.0`
 
 详见 [CHANGELOG.md](CHANGELOG.md)。

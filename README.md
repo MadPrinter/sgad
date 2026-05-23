@@ -20,6 +20,7 @@ SGAD adds the missing production engineering layer:
 - rollout gates
 - human approval policy
 - requirement-to-test-to-risk traceability
+- optional design governance for AI-generated UI
 
 ## Quickstart
 
@@ -56,6 +57,8 @@ Spec Layer       = proposal, design, specs, tasks
 Execution Layer  = plan, TDD, implementation, review, verification
 Governance Layer = risk class, policies, autonomy budget, rollout gates
 Evidence Layer   = requirement -> design -> task -> test -> risk -> proof
+
+Optional Tracks = Design, Security, Data, Release
 ```
 
 ## Risk Classes
@@ -115,8 +118,30 @@ npm run evaluate        # run all variants and score them
 npm run check           # run SGAD checks plus full evaluation
 npm run test:sgad       # run SGAD variant tests
 sgad init               # scaffold SGAD in the current project
+sgad init --with-design # scaffold SGAD plus optional UI design governance
 sgad check              # verify required governance artifacts
 ```
+
+## Optional Design Track
+
+SGAD now supports an optional Design Governance Track inspired by `DESIGN.md` libraries such as `awesome-design-md`.
+
+It is enabled only for UI-impacting work:
+
+```bash
+sgad init --with-design
+```
+
+This creates:
+
+```text
+design/DESIGN.md
+design/components.md
+design/screenshots/
+sgad/design-review.md
+```
+
+See [docs/design-governance.md](docs/design-governance.md).
 
 Run the SGAD sample app:
 
@@ -146,6 +171,6 @@ See [docs/integrations.md](docs/integrations.md).
 
 ## Version
 
-Current version: `v0.2.0`
+Current version: `v0.3.0`
 
 See [CHANGELOG.md](CHANGELOG.md).

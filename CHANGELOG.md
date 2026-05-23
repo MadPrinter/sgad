@@ -1,5 +1,22 @@
 # Changelog
 
+## v0.3.0 - 2026-05-23
+
+Added optional Design Governance Track inspired by `DESIGN.md` workflows.
+
+### Added
+
+- `sgad init --with-design` for UI/UX governance scaffolding.
+- `docs/design-governance.md` and Chinese translation.
+- `templates/DESIGN.md` for durable AI design context.
+- UI risk classes: `R1-UI`, `R2-UI`, `R3-UI`.
+- Design evidence fields in the change schema.
+- Optional governance tracks in the governance schema.
+
+### Changed
+
+- Updated README, quickstart, skills, evidence matrix, and governance config to show Design Track as optional rather than core bloat.
+
 ## v0.2.0 - 2026-05-23
 
 Open-source readiness upgrade inspired by Superpowers and OpenSpec.

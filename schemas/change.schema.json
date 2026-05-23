@@ -6,10 +6,20 @@
   "required": ["id", "risk_class", "requirements", "tests", "evidence"],
   "properties": {
     "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
-    "risk_class": { "enum": ["R0", "R1", "R2", "R3"] },
+    "risk_class": { "enum": ["R0", "R1", "R2", "R3", "R1-UI", "R2-UI", "R3-UI"] },
     "requirements": { "type": "array", "items": { "type": "string" } },
     "tests": { "type": "array", "items": { "type": "string" } },
     "evidence": { "type": "array", "items": { "type": "string" } },
-    "human_approval": { "type": "boolean" }
+    "human_approval": { "type": "boolean" },
+    "design": {
+      "type": "object",
+      "properties": {
+        "design_file": { "type": "string" },
+        "components": { "type": "array", "items": { "type": "string" } },
+        "screenshots": { "type": "array", "items": { "type": "string" } },
+        "responsive_checked": { "type": "boolean" },
+        "accessibility_checked": { "type": "boolean" }
+      }
+    }
   }
 }

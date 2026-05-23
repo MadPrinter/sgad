@@ -50,3 +50,13 @@ mkdir -p openspec/changes/add-audit-log
 ```bash
 sgad check
 ```
+
+## UI 工作
+
+涉及 UI 的变更，可以启用可选 Design Track：
+
+```bash
+sgad init --with-design
+```
+
+然后更新 `design/DESIGN.md`，并在 `sgad/design-review.md` 中记录证据。

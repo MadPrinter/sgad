@@ -1,5 +1,7 @@
-version: 0.2.0
+version: 0.3.0
 risk_class: R1
+optional_tracks:
+  design: false
 autonomy:
   max_files_without_review: 8
   max_minutes_without_checkpoint: 30

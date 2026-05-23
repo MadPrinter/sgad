@@ -50,3 +50,13 @@ Then implement the change and run:
 ```bash
 sgad check
 ```
+
+## UI Work
+
+For UI-impacting changes, initialize the optional Design Track:
+
+```bash
+sgad init --with-design
+```
+
+Then update `design/DESIGN.md` and record evidence in `sgad/design-review.md`.

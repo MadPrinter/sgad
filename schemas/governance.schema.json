@@ -7,6 +7,16 @@
   "properties": {
     "version": { "type": "string" },
     "risk_class": { "enum": ["R0", "R1", "R2", "R3"] },
+    "optional_tracks": {
+      "type": "object",
+      "properties": {
+        "design": { "type": "boolean" },
+        "security": { "type": "boolean" },
+        "data": { "type": "boolean" },
+        "release": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
     "autonomy": {
       "type": "object",
       "properties": {
