@@ -1,10 +1,24 @@
-# SGAD
+<p align="center">
+  <img src="assets/sgad-logo.svg" alt="SGAD logo" width="760">
+</p>
 
 **Spec-Governed Agentic Development: a practical governance layer for AI coding agents.**
 
 SGAD combines spec-driven development, agent execution discipline, TDD, and production governance. It is designed for teams that want AI agents to move fast without losing requirements, tests, risk review, rollout gates, and evidence.
 
-[中文](README.zh-CN.md) | [Getting Started](docs/getting-started.md) | [Spec](docs/sgad-v2.md) | [Evaluation](docs/evaluation.md) | [Competitive Analysis](docs/competitive-analysis.md)
+<p align="center">
+  <a href="README.zh-CN.md">Chinese</a> |
+  <a href="docs/getting-started.md">Getting Started</a> |
+  <a href="docs/sgad-v2.md">Spec</a> |
+  <a href="docs/evaluation.md">Evaluation</a> |
+  <a href="docs/design-governance.md">Design Track</a>
+</p>
+
+<p align="center">
+  <strong>OpenSpec-style specs</strong> + <strong>Superpowers-style execution</strong> + <strong>governance-as-code</strong> + <strong>evidence</strong>
+</p>
+
+![SGAD governance map](assets/governance-map.svg)
 
 ## Why It Exists
 
@@ -21,6 +35,8 @@ SGAD adds the missing production engineering layer:
 - human approval policy
 - requirement-to-test-to-risk traceability
 - optional design governance for AI-generated UI
+
+![SGAD benchmark scorecard](assets/benchmark-scorecard.svg)
 
 ## Quickstart
 
@@ -71,6 +87,16 @@ Optional Tracks = Design, Security, Data, Release
 | R3 | auth, RBAC, payment, deletion, compliance | full SGAD + human approval + rollout gates |
 
 ## What Ships In This Repo
+
+```mermaid
+flowchart LR
+  CLI["bin/sgad.js<br/>CLI"] --> Core["sgad/<br/>governance + evidence"]
+  Core --> Spec["openspec/changes/<br/>proposal + design + tasks"]
+  Core --> Schemas["schemas/<br/>machine-checkable policy"]
+  Core --> Design["design/<br/>optional UI governance"]
+  Core --> Eval["tools/<br/>benchmark evaluator"]
+  Eval --> Variants["variants/<br/>OpenSpec vs Superpowers vs SGAD"]
+```
 
 ```text
 bin/sgad.js                  portable CLI

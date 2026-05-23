@@ -1,10 +1,18 @@
-# SGAD
+<p align="center">
+  <img src="assets/sgad-logo.svg" alt="SGAD logo" width="760">
+</p>
 
 **Spec-Governed Agentic Development：面向 AI 编程 Agent 的工程治理层。**
 
 SGAD 融合规格驱动开发、Agent 执行纪律、TDD 和生产工程治理。它面向那些希望 AI Agent 快速推进、但又不想丢掉需求、测试、风险评审、发布门禁和证据的团队。
 
 [English](README.md) | [快速开始](docs/zh-CN/getting-started.md) | [规范](docs/zh-CN/sgad-v2.md) | [评估](docs/zh-CN/evaluation.md) | [竞品分析](docs/zh-CN/competitive-analysis.md)
+
+<p align="center">
+  <strong>OpenSpec 风格规格</strong> + <strong>Superpowers 风格执行</strong> + <strong>governance-as-code</strong> + <strong>证据矩阵</strong>
+</p>
+
+![SGAD governance map](assets/governance-map.svg)
 
 ## 为什么需要它
 
@@ -21,6 +29,8 @@ SGAD 补上生产工程里最容易缺失的一层：
 - 人工审批策略
 - 需求到测试到风险的可追溯性
 - 面向 AI 生成 UI 的可选设计治理
+
+![SGAD benchmark scorecard](assets/benchmark-scorecard.svg)
 
 ## 快速开始
 
@@ -71,6 +81,16 @@ SGAD = 规格层 + 执行层 + 治理层 + 证据层
 | R3 | 认证、RBAC、支付、删除、合规 | 完整 SGAD + 人工审批 + 发布门禁 |
 
 ## 仓库包含什么
+
+```mermaid
+flowchart LR
+  CLI["bin/sgad.js<br/>CLI"] --> Core["sgad/<br/>governance + evidence"]
+  Core --> Spec["openspec/changes/<br/>proposal + design + tasks"]
+  Core --> Schemas["schemas/<br/>machine-checkable policy"]
+  Core --> Design["design/<br/>optional UI governance"]
+  Core --> Eval["tools/<br/>benchmark evaluator"]
+  Eval --> Variants["variants/<br/>OpenSpec vs Superpowers vs SGAD"]
+```
 
 ```text
 bin/sgad.js                  可移植 CLI

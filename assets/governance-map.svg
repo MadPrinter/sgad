@@ -1,0 +1,62 @@
+<svg width="1100" height="520" viewBox="0 0 1100 520" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">SGAD governance map</title>
+  <desc id="desc">A diagram showing SGAD core layers and optional governance tracks.</desc>
+  <rect width="1100" height="520" rx="24" fill="#F8FAFC"/>
+  <text x="48" y="62" fill="#0F172A" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="34" font-weight="800">SGAD turns agent work into governed engineering evidence</text>
+  <text x="50" y="96" fill="#475569" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="18">Spec, execution, risk, rollout, and proof stay in the repository instead of the chat transcript.</text>
+
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2 2L10 6L2 10" fill="none" stroke="#64748B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <g transform="translate(58 145)">
+    <rect width="210" height="132" rx="18" fill="#E0F2FE" stroke="#38BDF8" stroke-width="2"/>
+    <text x="24" y="42" fill="#075985" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="24" font-weight="800">1. Spec</text>
+    <text x="24" y="74" fill="#0F172A" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15">proposal</text>
+    <text x="24" y="98" fill="#0F172A" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15">design</text>
+    <text x="112" y="74" fill="#0F172A" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15">tasks</text>
+    <text x="112" y="98" fill="#0F172A" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15">test plan</text>
+  </g>
+  <line x1="282" y1="211" x2="362" y2="211" stroke="#64748B" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <g transform="translate(378 145)">
+    <rect width="210" height="132" rx="18" fill="#DCFCE7" stroke="#22C55E" stroke-width="2"/>
+    <text x="24" y="42" fill="#166534" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="24" font-weight="800">2. Execute</text>
+    <text x="24" y="74" fill="#0F172A" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15">TDD</text>
+    <text x="24" y="98" fill="#0F172A" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15">implementation</text>
+    <text x="128" y="74" fill="#0F172A" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15">review</text>
+    <text x="128" y="98" fill="#0F172A" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15">verify</text>
+  </g>
+  <line x1="602" y1="211" x2="682" y2="211" stroke="#64748B" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <g transform="translate(698 145)">
+    <rect width="210" height="132" rx="18" fill="#FEF3C7" stroke="#F59E0B" stroke-width="2"/>
+    <text x="24" y="42" fill="#92400E" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="24" font-weight="800">3. Govern</text>
+    <text x="24" y="74" fill="#0F172A" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15">risk class</text>
+    <text x="24" y="98" fill="#0F172A" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15">approval</text>
+    <text x="120" y="74" fill="#0F172A" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15">rollout</text>
+    <text x="120" y="98" fill="#0F172A" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15">rollback</text>
+  </g>
+
+  <path d="M803 285C803 330 760 353 700 353H210C150 353 110 374 110 418" stroke="#64748B" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+
+  <g transform="translate(58 384)">
+    <rect width="360" height="86" rx="18" fill="#F3E8FF" stroke="#A855F7" stroke-width="2"/>
+    <text x="24" y="36" fill="#6B21A8" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="24" font-weight="800">4. Evidence</text>
+    <text x="24" y="64" fill="#0F172A" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15">requirement -> design -> task -> test -> risk -> proof</text>
+  </g>
+
+  <g transform="translate(520 360)">
+    <text x="0" y="0" fill="#334155" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="18" font-weight="800">Optional tracks</text>
+    <rect x="0" y="20" width="112" height="38" rx="19" fill="#ECFEFF" stroke="#06B6D4"/>
+    <text x="29" y="45" fill="#155E75" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15" font-weight="700">Design</text>
+    <rect x="126" y="20" width="116" height="38" rx="19" fill="#FEF2F2" stroke="#EF4444"/>
+    <text x="154" y="45" fill="#991B1B" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15" font-weight="700">Security</text>
+    <rect x="256" y="20" width="92" height="38" rx="19" fill="#F0FDFA" stroke="#14B8A6"/>
+    <text x="284" y="45" fill="#115E59" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15" font-weight="700">Data</text>
+    <rect x="362" y="20" width="104" height="38" rx="19" fill="#EEF2FF" stroke="#6366F1"/>
+    <text x="390" y="45" fill="#3730A3" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15" font-weight="700">Release</text>
+  </g>
+</svg>
