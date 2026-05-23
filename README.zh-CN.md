@@ -1,80 +1,91 @@
-# SGAD：规格治理型 AI 开发规范
+# SGAD
 
-SGAD 是一套 AI 开发治理框架，融合了：
+**Spec-Governed Agentic Development：面向 AI 编程 Agent 的工程治理层。**
 
-- **OpenSpec 风格的规格与变更管理**
-- **Superpowers 风格的 Agent 执行纪律**
-- **工程治理层：风险、证据、评审、发布、CI 门禁**
+SGAD 融合规格驱动开发、Agent 执行纪律、TDD 和生产工程治理。它面向那些希望 AI Agent 快速推进、但又不想丢掉需求、测试、风险评审、发布门禁和证据的团队。
 
-这个仓库同时包含 SGAD v2 规范，以及一个真实可运行的对比实验：同一个中型项目分别用 OpenSpec、Superpowers、SGAD 三种方式实现，并统一评分。
+[English](README.md) | [快速开始](docs/zh-CN/getting-started.md) | [规范](docs/zh-CN/sgad-v2.md) | [评估](docs/zh-CN/evaluation.md) | [竞品分析](docs/zh-CN/competitive-analysis.md)
 
-English: [README.md](README.md)
+## 为什么需要它
 
-## 为什么需要 SGAD
+OpenSpec 擅长结构化变更提案和规格管理。
 
-AI coding agent 很会写代码，但生产工程需要的不只是代码：
+Superpowers 擅长约束 Agent 的执行纪律。
 
-- 需求必须可追踪
-- 测试必须能证明行为
-- 高风险变更必须被评审
-- 数据库迁移需要回滚方案
-- 权限/RBAC/安全变更需要门禁
-- AI 自治必须有边界
+SGAD 补上生产工程里最容易缺失的一层：
 
-SGAD 把 AI 开发视为一个受治理的工程过程，而不是一次聊天。
+- 风险分级
+- 自主性预算
+- 证据矩阵
+- 发布门禁
+- 人工审批策略
+- 需求到测试到风险的可追溯性
 
-## 核心公式
+## 快速开始
+
+运行 benchmark：
+
+```bash
+git clone https://github.com/MadPrinter/sgad.git
+cd sgad
+npm run evaluate
+```
+
+在另一个项目中使用 SGAD：
+
+```bash
+npm link
+cd your-project
+sgad init
+sgad check
+```
+
+给 AI Agent 的提示词：
 
 ```text
-SGAD v2 = 规格层 + 执行层 + 治理层 + 证据层
+Use SGAD for this change. Classify risk, create or update openspec/changes/<change-id>,
+write tests, update sgad/evidence-matrix.md, and run sgad check before final response.
+```
 
-规格层 = OpenSpec 风格 proposal/spec/design/tasks
-执行层 = Superpowers 风格 TDD/review/verification
-治理层 = 风险分级 + policy + rollout gate
-证据层 = 需求-设计-任务-测试-风险的可追踪矩阵
+## 核心模型
+
+```text
+SGAD = 规格层 + 执行层 + 治理层 + 证据层
+
+规格层 = proposal, design, specs, tasks
+执行层 = plan, TDD, implementation, review, verification
+治理层 = risk class, policies, autonomy budget, rollout gates
+证据层 = requirement -> design -> task -> test -> risk -> proof
 ```
 
 ## 风险分级
 
-| 级别 | 范围 | 所需流程 |
+| 级别 | 范围 | 必需流程 |
 |---|---|---|
 | R0 | 文案、文档、小配置 | task + verification |
 | R1 | 单模块普通功能 | spec + tasks + tests |
-| R2 | API、数据库、后台任务、外部副作用 | 完整 SGAD |
+| R2 | API、数据库、后台任务、外部副作用 | 完整 SGAD 流程 |
 | R3 | 认证、RBAC、支付、删除、合规 | 完整 SGAD + 人工审批 + 发布门禁 |
 
-## 仓库结构
+## 仓库包含什么
 
 ```text
-docs/
-  sgad-v2.md
-  design-history.md
-  evaluation.md
-  zh-CN/
-    sgad-v2.md
-    design-history.md
-    evaluation.md
-
-seed/
-  统一起始项目
-
-variants/
-  openspec/
-  superpowers/
-  sgad/
-
-tools/
-  evaluate-variant.js
-  evaluate-all.js
+bin/sgad.js                  可移植 CLI
+plugins/sgad/                Codex 兼容插件骨架
+schemas/                     可机器检查的治理 schema
+docs/                        英文文档
+docs/zh-CN/                  中文文档
+variants/openspec/           OpenSpec 风格实现
+variants/superpowers/        Superpowers 风格实现
+variants/sgad/               SGAD 实现
+tools/                       评估和打分脚本
 ```
 
 ## 真实实验
 
-实验项目是一个中型系统：
+仓库包含一个可运行的中型 benchmark：**Incident Response Center**。
 
-**多租户 Incident Response Center**
-
-包含：
+三种方案都实现同一个系统：
 
 - REST API
 - 静态前端
@@ -85,7 +96,7 @@ tools/
 - SLA reminder 后台任务
 - injectable notifier
 - 测试
-- 各自规范要求的文档产物
+- 各自工作流要求的文档产物
 
 最终评分：
 
@@ -95,20 +106,24 @@ tools/
 | Superpowers | 78/100 | 6 个通过 |
 | SGAD v2 | 95/100 | 6 个通过 |
 
-详见：[docs/zh-CN/evaluation.md](docs/zh-CN/evaluation.md)
+详见 [EXPERIMENT_REPORT.md](EXPERIMENT_REPORT.md) 和 [RESULTS.json](RESULTS.json)。
 
-## 运行实验
+## 命令
 
 ```bash
-node tools/evaluate-all.js
+npm run evaluate        # 运行全部方案并打分
+npm run check           # 运行 SGAD 检查和完整评估
+npm run test:sgad       # 运行 SGAD 方案测试
+sgad init               # 在当前项目生成 SGAD 治理文件
+sgad check              # 检查必需治理产物
 ```
 
-运行单个版本：
+运行 SGAD 示例应用：
 
-```powershell
-cd variants\sgad
+```bash
+cd variants/sgad
 node --test
-node src\server.js
+node src/server.js
 ```
 
 打开：
@@ -117,16 +132,20 @@ node src\server.js
 http://localhost:3000
 ```
 
-如果端口被占用：
+## Agent 支持
 
-```powershell
-$env:PORT=3001
-node src\server.js
-```
+SGAD 不绑定具体 Agent。Codex、Claude Code、Cursor、OpenCode、Gemini CLI、GitHub Copilot CLI，或者任何能读写仓库文件的助手都能使用。
+
+仓库已经包含：
+
+- `plugins/sgad/skills/sgad/SKILL.md`
+- `sgad init` 会生成的 `.codex/skills/sgad/SKILL.md`
+- 可以映射到 slash command adapter 的 CLI 命令
+
+详见 [docs/integrations.md](docs/integrations.md)。
 
 ## 版本
 
-当前版本：`v0.1.0`
+当前版本：`v0.2.0`
 
-详见：[CHANGELOG.md](CHANGELOG.md)
-
+详见 [CHANGELOG.md](CHANGELOG.md)。

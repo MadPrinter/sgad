@@ -1,13 +1,34 @@
 {
   "name": "sgad",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Spec-Governed Agentic Development: AI development governance framework and runnable comparison experiment.",
   "type": "module",
+  "bin": {
+    "sgad": "./bin/sgad.js"
+  },
   "scripts": {
+    "sgad": "node bin/sgad.js",
     "evaluate": "node tools/evaluate-all.js",
+    "check": "node bin/sgad.js check && node tools/evaluate-all.js",
     "test:openspec": "cd variants/openspec && node --test",
     "test:superpowers": "cd variants/superpowers && node --test",
     "test:sgad": "cd variants/sgad && node --test"
   },
-  "license": "MIT"
+  "keywords": [
+    "ai",
+    "agent",
+    "governance",
+    "sdd",
+    "spec-driven-development",
+    "context-engineering",
+    "tdd"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MadPrinter/sgad.git"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.0.0"
+  }
 }

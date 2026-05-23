@@ -1,0 +1,9 @@
+{
+  "name": "sgad",
+  "version": "0.2.0",
+  "description": "Spec-Governed Agentic Development workflow for Codex-compatible agents.",
+  "interface": {
+    "displayName": "SGAD",
+    "description": "Adds spec, execution, governance, and evidence discipline to AI software development."
+  }
+}

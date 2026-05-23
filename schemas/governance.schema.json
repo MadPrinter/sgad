@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/MadPrinter/sgad/schemas/governance.schema.json",
+  "title": "SGAD Governance Policy",
+  "type": "object",
+  "required": ["version", "risk_class", "gates"],
+  "properties": {
+    "version": { "type": "string" },
+    "risk_class": { "enum": ["R0", "R1", "R2", "R3"] },
+    "autonomy": {
+      "type": "object",
+      "properties": {
+        "max_files_without_review": { "type": "integer", "minimum": 1 },
+        "max_minutes_without_checkpoint": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "gates": {
+      "type": "object",
+      "properties": {
+        "require_spec": { "type": "boolean" },
+        "require_tests": { "type": "boolean" },
+        "require_evidence_matrix": { "type": "boolean" },
+        "require_risk_review_for": {
+          "type": "array",
+          "items": { "enum": ["R2", "R3"] }
+        }
+      }
+    },
+    "approvals": {
+      "type": "object",
+      "additionalProperties": { "enum": ["ai", "human"] }
+    }
+  }
+}

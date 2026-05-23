@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/MadPrinter/sgad/schemas/change.schema.json",
+  "title": "SGAD Change Record",
+  "type": "object",
+  "required": ["id", "risk_class", "requirements", "tests", "evidence"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+    "risk_class": { "enum": ["R0", "R1", "R2", "R3"] },
+    "requirements": { "type": "array", "items": { "type": "string" } },
+    "tests": { "type": "array", "items": { "type": "string" } },
+    "evidence": { "type": "array", "items": { "type": "string" } },
+    "human_approval": { "type": "boolean" }
+  }
+}

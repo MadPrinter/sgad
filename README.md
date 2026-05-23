@@ -1,37 +1,61 @@
-# SGAD: Spec-Governed Agentic Development
+# SGAD
 
-SGAD is an AI development governance framework that combines:
+**Spec-Governed Agentic Development: a practical governance layer for AI coding agents.**
 
-- **OpenSpec-style specification management**
-- **Superpowers-style agent execution discipline**
-- **Governance-as-code for risk, evidence, review, rollout, and CI gates**
+SGAD combines spec-driven development, agent execution discipline, TDD, and production governance. It is designed for teams that want AI agents to move fast without losing requirements, tests, risk review, rollout gates, and evidence.
 
-This repository contains both the SGAD v2 specification and a real runnable experiment comparing SGAD with OpenSpec and Superpowers on the same medium-sized project.
+[中文](README.zh-CN.md) | [Getting Started](docs/getting-started.md) | [Spec](docs/sgad-v2.md) | [Evaluation](docs/evaluation.md) | [Competitive Analysis](docs/competitive-analysis.md)
 
-中文文档: [README.zh-CN.md](README.zh-CN.md)
+## Why It Exists
 
-## Why SGAD
+OpenSpec is strong at structured change proposals and specs.
 
-AI coding agents are good at producing code, but production engineering needs more than code:
+Superpowers is strong at disciplined agent execution.
 
-- requirements must be traceable
-- tests must prove behavior
-- risky changes must be reviewed
-- database migrations need rollback plans
-- security and RBAC changes need gates
-- AI autonomy must have boundaries
+SGAD adds the missing production engineering layer:
 
-SGAD treats AI development as a governed engineering process, not a chat transcript.
+- risk classification
+- autonomy budgets
+- evidence matrices
+- rollout gates
+- human approval policy
+- requirement-to-test-to-risk traceability
 
-## Core Formula
+## Quickstart
+
+Run the benchmark:
+
+```bash
+git clone https://github.com/MadPrinter/sgad.git
+cd sgad
+npm run evaluate
+```
+
+Use SGAD in another project:
+
+```bash
+npm link
+cd your-project
+sgad init
+sgad check
+```
+
+Use it with an AI agent:
 
 ```text
-SGAD v2 = Spec Layer + Execution Layer + Governance Layer + Evidence Layer
+Use SGAD for this change. Classify risk, create or update openspec/changes/<change-id>,
+write tests, update sgad/evidence-matrix.md, and run sgad check before final response.
+```
 
-Spec Layer       = OpenSpec-style proposal/spec/design/tasks
-Execution Layer  = Superpowers-style TDD/review/verification
-Governance Layer = risk classification + policies + rollout gates
-Evidence Layer   = requirement-to-test-to-risk traceability
+## Core Model
+
+```text
+SGAD = Spec Layer + Execution Layer + Governance Layer + Evidence Layer
+
+Spec Layer       = proposal, design, specs, tasks
+Execution Layer  = plan, TDD, implementation, review, verification
+Governance Layer = risk class, policies, autonomy budget, rollout gates
+Evidence Layer   = requirement -> design -> task -> test -> risk -> proof
 ```
 
 ## Risk Classes
@@ -43,36 +67,25 @@ Evidence Layer   = requirement-to-test-to-risk traceability
 | R2 | API, DB, background jobs, external side effects | full SGAD workflow |
 | R3 | auth, RBAC, payment, deletion, compliance | full SGAD + human approval + rollout gates |
 
-## Repository Layout
+## What Ships In This Repo
 
 ```text
-docs/
-  sgad-v2.md
-  design-history.md
-  evaluation.md
-  zh-CN/
-    sgad-v2.md
-    design-history.md
-    evaluation.md
-
-seed/
-  minimal starting project
-
-variants/
-  openspec/
-  superpowers/
-  sgad/
-
-tools/
-  evaluate-variant.js
-  evaluate-all.js
+bin/sgad.js                  portable CLI
+plugins/sgad/                Codex-compatible plugin skeleton
+schemas/                     machine-checkable governance schemas
+docs/                        English documentation
+docs/zh-CN/                  Chinese documentation
+variants/openspec/           OpenSpec-style implementation
+variants/superpowers/        Superpowers-style implementation
+variants/sgad/               SGAD implementation
+tools/                       evaluator and scoring scripts
 ```
 
 ## Real Experiment
 
-The experiment implements the same medium-sized system three times:
+The repository includes a runnable medium-sized benchmark: **Incident Response Center**.
 
-**Incident Response Center**
+All three variants implement the same system:
 
 - REST API
 - static frontend
@@ -93,15 +106,19 @@ Final score:
 | Superpowers | 78/100 | 6 passing |
 | SGAD v2 | 95/100 | 6 passing |
 
-See [docs/evaluation.md](docs/evaluation.md).
+See [EXPERIMENT_REPORT.md](EXPERIMENT_REPORT.md) and [RESULTS.json](RESULTS.json).
 
-## Run the Experiment
+## Commands
 
 ```bash
-node tools/evaluate-all.js
+npm run evaluate        # run all variants and score them
+npm run check           # run SGAD checks plus full evaluation
+npm run test:sgad       # run SGAD variant tests
+sgad init               # scaffold SGAD in the current project
+sgad check              # verify required governance artifacts
 ```
 
-Run one variant:
+Run the SGAD sample app:
 
 ```bash
 cd variants/sgad
@@ -115,22 +132,20 @@ Open:
 http://localhost:3000
 ```
 
-Use a different port:
+## Agent Support
 
-```bash
-PORT=3001 node src/server.js
-```
+SGAD is agent-neutral. It can be used with Codex, Claude Code, Cursor, OpenCode, Gemini CLI, GitHub Copilot CLI, or any assistant that can read repository files.
 
-On PowerShell:
+The repo includes:
 
-```powershell
-$env:PORT=3001
-node src\server.js
-```
+- `plugins/sgad/skills/sgad/SKILL.md`
+- `.codex/skills/sgad/SKILL.md` generated by `sgad init`
+- CLI commands that map cleanly to slash-command adapters
+
+See [docs/integrations.md](docs/integrations.md).
 
 ## Version
 
-Current version: `v0.1.0`
+Current version: `v0.2.0`
 
 See [CHANGELOG.md](CHANGELOG.md).
-
