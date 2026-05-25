@@ -18,6 +18,19 @@ plugins/sgad/
 .codex/skills/sgad/SKILL.md
 ```
 
+## Claude Code
+
+仓库包含 Claude Code 项目配置和 skill：
+
+```text
+CLAUDE.md                                 自动读取的项目指令
+.claude/skills/sgad/SKILL.md              可通过 `/sgad` 调用
+```
+
+`CLAUDE.md` 在 Claude Code 打开项目根目录时自动加载，将 SGAD 四层工作流配置为 Claude Code 的操作指令。
+
+`.claude/skills/sgad/SKILL.md` 可通过 `/sgad` 调用，提供同样的治理工作流。
+
 ## Slash Command 形态
 
 SGAD 命令可以自然映射到不同工具的 slash command：

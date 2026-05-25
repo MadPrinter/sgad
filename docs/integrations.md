@@ -18,6 +18,33 @@ You can also copy the generated project skill from:
 .codex/skills/sgad/SKILL.md
 ```
 
+## Claude Code
+
+This repository includes a Claude Code project configuration and skill:
+
+```text
+CLAUDE.md                                  auto-read project instructions
+.claude/skills/sgad/SKILL.md               invocable via `/sgad`
+```
+
+`CLAUDE.md` is automatically loaded when Claude Code opens the project root. It configures the four-layer SGAD workflow as Claude Code's operational instructions.
+
+The skill at `.claude/skills/sgad/SKILL.md` can be invoked with `/sgad` and provides the same governance workflow for ad-hoc use.
+
+You can also use `sgad init` from the CLI to scaffold governance artifacts in any project, then pair it with a `CLAUDE.md` file:
+
+```bash
+sgad init
+cat > CLAUDE.md << 'EOF'
+---
+name: sgad
+description: SGAD-governed project.
+---
+Follow SGAD workflow for all changes.
+Classify risk, write specs, maintain evidence.
+EOF
+```
+
 ## Slash Command Shape
 
 SGAD commands are designed to map cleanly to tool-specific slash commands:

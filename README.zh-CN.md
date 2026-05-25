@@ -217,7 +217,9 @@ SGAD 不绑定具体 Agent。Codex、Claude Code、Cursor、OpenCode、Gemini CL
 
 仓库已经包含：
 
-- `plugins/sgad/skills/sgad/SKILL.md`
+- `CLAUDE.md` — **Claude Code** 自动读取的项目指令
+- `.claude/skills/sgad/SKILL.md` — Claude Code skill，可通过 `/sgad` 调用
+- `plugins/sgad/skills/sgad/SKILL.md` — 可移植插件骨架
 - `sgad init` 会生成的 `.codex/skills/sgad/SKILL.md`
 - 可以映射到 slash command adapter 的 CLI 命令
 
