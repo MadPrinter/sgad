@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SGAD Experience Lesson",
+  "type": "object",
+  "required": ["id", "title", "scope", "triggers", "advice", "evidence", "confidence", "status", "last_validated"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^LESSON-[0-9A-Za-z_-]+$" },
+    "title": { "type": "string", "minLength": 1 },
+    "scope": {
+      "type": "object",
+      "properties": {
+        "repos": { "type": "array", "items": { "type": "string" } },
+        "files": { "type": "array", "items": { "type": "string" } },
+        "task_types": { "type": "array", "items": { "type": "string" } },
+        "commands": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "triggers": {
+      "type": "object",
+      "properties": {
+        "keywords": { "type": "array", "items": { "type": "string" } },
+        "commands": { "type": "array", "items": { "type": "string" } },
+        "errors": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "advice": { "type": "string", "minLength": 1 },
+    "summary": { "type": "string" },
+    "evidence": {
+      "type": "object",
+      "properties": {
+        "episodes": { "type": "array", "items": { "type": "string" } },
+        "tests": { "type": "array", "items": { "type": "string" } },
+        "files": { "type": "array", "items": { "type": "string" } },
+        "artifacts": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "confidence": { "enum": ["low", "medium", "high"] },
+    "status": { "enum": ["candidate", "active", "stale", "deprecated", "rejected", "review"] },
+    "last_validated": { "type": "string" }
+  },
+  "additionalProperties": true
+}

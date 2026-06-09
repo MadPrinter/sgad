@@ -11,7 +11,8 @@ SGAD combines spec-driven development, agent execution discipline, TDD, and prod
   <a href="docs/getting-started.md">Getting Started</a> |
   <a href="docs/sgad-v2.md">Spec</a> |
   <a href="docs/evaluation.md">Evaluation</a> |
-  <a href="docs/design-governance.md">Design Track</a>
+  <a href="docs/design-governance.md">Design Track</a> |
+  <a href="docs/experience-layer.md">Experience Layer</a>
 </p>
 
 <p align="center">
@@ -61,7 +62,7 @@ Use it with an AI agent:
 
 ```text
 Use SGAD for this change. Classify risk, create or update openspec/changes/<change-id>,
-write tests, update sgad/evidence-matrix.md, and run sgad check before final response.
+write tests, fill sgad/evidence-matrix.md or sgad/waivers.yaml, and run sgad check before final response.
 ```
 
 ## Core Model
@@ -179,8 +180,51 @@ npm run check           # run SGAD checks plus full evaluation
 npm run test:sgad       # run SGAD variant tests
 sgad init               # scaffold SGAD in the current project
 sgad init --with-design # scaffold SGAD plus optional UI design governance
+sgad init --with-experience # scaffold SGAD plus optional agent experience governance
 sgad check              # verify required governance artifacts
+sgad check --json       # emit machine-readable issues and warnings for CI or agents
+sgad experience recall --json # recall bounded project experience summaries
+sgad experience audit --json  # validate project experience artifacts
 ```
+
+## Evidence Closure
+
+For R2/R3 work, `sgad check` verifies that evidence rows are closed, not merely present. Naked `pending`, `TBD`, empty,
+or placeholder evidence fails unless a matching unexpired waiver exists in `sgad/waivers.yaml`.
+
+```yaml
+evidence:
+  allow_pending: false
+  pending_max: 0
+  require_evidence_paths: true
+```
+
+Concrete evidence should point at repository paths, test paths, globs, URLs, or recognized external artifacts such as
+`uat:<id>`. Use waivers only for time-boxed exceptions:
+
+```yaml
+waivers:
+  - requirement: REQ-003
+    reason: "UAT blocked on schedule; automated dry-run passed"
+    expires: 2026-06-15
+    approved_by: human
+    evidence_partial: tests/test_smtp_reply.py
+```
+
+## Experience Layer
+
+SGAD can keep project-local agent experience without injecting history by default. Reusable lessons live under
+`sgad/experience/`, stay scoped to files or task types, and require evidence before active recall.
+
+```bash
+sgad experience recall --query "evidence gate" --files "bin/sgad.js" --limit 3 --json
+sgad experience template --title "Evidence gate lesson" --change "<change-id>" --files "bin/sgad.js" --json
+sgad experience audit --json
+```
+
+Recall returns only bounded summaries from active, scoped, evidence-backed lessons. Raw traces and long episodes remain
+audit material unless explicitly requested. New lessons start as review-queue candidates and do not affect recall until
+they are promoted to `active` with scope, triggers, and evidence.
 
 ## Optional Design Track
 

@@ -59,6 +59,7 @@ Optional tracks attach specialized evidence requirements without making every ch
 | Security | auth, secrets, threat model, abuse cases | threat notes, approval, security test evidence |
 | Data | schema, migration, retention, privacy | migration plan, rollback, data validation |
 | Release | rollout, flags, staged deploy, rollback | rollout checklist, monitoring, rollback notes |
+| Experience | repeated agent failures, R2/R3 learning, reusable project lessons | `sgad/experience/lessons.yaml`, episodes, audit output |
 
 ### Design Track
 
@@ -73,6 +74,22 @@ Use UI-specific risk classes:
 | R3-UI | payment, deletion, auth, permission, compliance, high-trust UI | R2-UI + human approval + copy review + rollback plan |
 
 See [design-governance.md](design-governance.md).
+
+### Experience Track
+
+Experience Track is an optional repository-local learning layer. It stores scoped, evidence-backed lessons that can be
+recalled for similar future work without injecting all prior history into every prompt.
+
+Use it when a task produces reusable learning, repeated failures, user corrections, or R2/R3 process lessons.
+
+```bash
+sgad init --with-experience
+sgad experience recall --query "evidence gate" --files "bin/sgad.js" --json
+sgad experience audit --json
+```
+
+Active lessons must include scope, triggers, evidence, confidence, status, and last validation date. Project SGAD rules
+override agent-global memory. See [experience-layer.md](experience-layer.md).
 
 ## Required Artifacts
 
@@ -110,6 +127,34 @@ Example:
 | Requirement | Design | Task | Test | Risk | Status |
 |---|---|---|---|---|---|
 | Tenant isolation | request context + repository filter | T-004 | IT-tenant-001 | RISK-tenant-leak | verified |
+
+For Standard or Full SGAD projects, evidence must close rather than merely exist. Configure the gate in
+`sgad/governance.yaml`:
+
+```yaml
+evidence:
+  allow_pending: false
+  pending_max: 0
+  require_evidence_paths: true
+```
+
+`sgad check` treats blank, `pending`, `TBD`, `todo`, `-`, and `n/a` evidence as pending. For R2/R3 projects, naked
+pending evidence fails by default. Non-pending evidence should cite concrete repository paths, test paths, globs, URLs,
+or recognized external artifacts such as `uat:<id>`.
+
+Use a waiver when evidence is intentionally time-boxed instead of complete:
+
+```yaml
+waivers:
+  - requirement: REQ-003
+    reason: "UAT blocked on planning department schedule"
+    expires: 2026-06-15
+    approved_by: human
+    evidence_partial: tests/test_smtp_reply.py
+```
+
+A valid waiver downgrades pending evidence to a warning. `sgad check --json` emits structured `passed`, `issues`, and
+`warnings` fields for CI and agent repair loops.
 
 ## Autonomy Budget
 

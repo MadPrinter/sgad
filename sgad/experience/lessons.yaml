@@ -1,0 +1,18 @@
+lessons:
+  - id: LESSON-001
+    title: Governance gates must validate closure, not presence
+    scope:
+      repos: [sgad]
+      files: [bin/sgad.js, sgad/evidence-matrix.md]
+      task_types: [cli-check, governance-gate]
+    triggers:
+      keywords: [sgad check, evidence, pending, waiver]
+      commands: [node bin/sgad.js check]
+    advice: Validate artifact closure, not only artifact existence.
+    summary: For R2/R3 governance gates, validate evidence closure rather than file presence.
+    evidence:
+      episodes: [sgad/experience/episodes/active/enhance-evidence-check.md]
+      tests: [test/sgad-check.test.js]
+    confidence: high
+    status: active
+    last_validated: 2026-06-09
