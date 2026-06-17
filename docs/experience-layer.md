@@ -80,7 +80,8 @@ Recall is zero-default: SGAD does not load experience into every task. Run recal
 failures, or when current files/errors match known lesson triggers.
 
 ```bash
-sgad experience recall --query "evidence gate" --files "bin/sgad.js" --limit 3 --max-tokens 800 --json
+sgad experience recall --query "evidence gate" --files "bin/sgad.js" --tags "governance-gate" --limit 3 --max-tokens 800 --json
+sgad experience index [--write] [--json]
 ```
 
 Recall filters by:
@@ -88,6 +89,7 @@ Recall filters by:
 - status
 - scope
 - trigger match
+- optional tag filter (`--tags`) with relevance threshold (`--min-score`, default 4)
 - evidence presence
 - token budget
 

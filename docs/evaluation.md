@@ -56,7 +56,10 @@ The evaluator measures both code behavior and workflow artifacts. Superpowers is
 
 ```bash
 node tools/evaluate-all.js
+npm run evaluate:replay
 ```
+
+For L3 agent governance replay, see [agent-replay.md](agent-replay.md).
 
 Individual tests:
 

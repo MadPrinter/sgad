@@ -185,6 +185,12 @@ test("audit fails lessons missing required fields", () => {
 test("audit passes active lessons with scope and evidence", () => {
   const dir = makeProject({
     "test/example.test.js": "import test from 'node:test';\n",
+    "sgad/experience/INDEX.md": `# Experience Index
+
+| ID | Status | Tags | Task Types | Summary |
+|---|---|---|---|---|
+| LESSON-001 | active | - | - | Validate evidence closure. |
+`,
     "sgad/experience/lessons.yaml": `lessons:
   - id: LESSON-001
     title: Good active lesson

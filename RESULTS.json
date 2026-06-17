@@ -6,7 +6,7 @@
     "percent": 83,
     "tests": {
       "status": 0,
-      "stdout": "✔ creates, lists, reads, and audits incidents within one tenant (39.0582ms)\n✔ enforces tenant isolation for reads, writes, and audit log (16.4414ms)\n✔ applies RBAC for admin, responder, and viewer (8.9171ms)\n✔ validates create payload and allowed status transitions (9.3172ms)\n✔ runs SLA reminder job with injectable notifier and no duplicate reminders (13.5675ms)\nℹ tests 5\nℹ suites 0\nℹ pass 5\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 207.6024\n",
+      "stdout": "TAP version 13\n# Subtest: creates, lists, reads, and audits incidents within one tenant\nok 1 - creates, lists, reads, and audits incidents within one tenant\n  ---\n  duration_ms: 47.3683\n  type: 'test'\n  ...\n# Subtest: enforces tenant isolation for reads, writes, and audit log\nok 2 - enforces tenant isolation for reads, writes, and audit log\n  ---\n  duration_ms: 21.3588\n  type: 'test'\n  ...\n# Subtest: applies RBAC for admin, responder, and viewer\nok 3 - applies RBAC for admin, responder, and viewer\n  ---\n  duration_ms: 13.6432\n  type: 'test'\n  ...\n# Subtest: validates create payload and allowed status transitions\nok 4 - validates create payload and allowed status transitions\n  ---\n  duration_ms: 10.2917\n  type: 'test'\n  ...\n# Subtest: runs SLA reminder job with injectable notifier and no duplicate reminders\nok 5 - runs SLA reminder job with injectable notifier and no duplicate reminders\n  ---\n  duration_ms: 18.6417\n  type: 'test'\n  ...\n1..5\n# tests 5\n# suites 0\n# pass 5\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 270.36\n",
       "stderr": ""
     },
     "checks": [
@@ -91,7 +91,7 @@
     "percent": 78,
     "tests": {
       "status": 0,
-      "stdout": "▶ Incident Response Center API\n  ✔ creates, lists, reads, assigns, resolves, and audits incidents inside one tenant (33.1461ms)\n  ✔ validates create payloads and allowed status transitions (6.0601ms)\n  ✔ enforces RBAC for viewer, responder resolve, audit, create, and job operations (7.0857ms)\n  ✔ isolates tenants for list, read, audit, and SLA reminders (5.3755ms)\n  ✔ runs SLA reminder job only for unresolved incidents due within one hour and does not duplicate reminders (6.0152ms)\n  ✔ serves health and the static frontend (3.2451ms)\n✔ Incident Response Center API (65.1999ms)\nℹ tests 6\nℹ suites 1\nℹ pass 6\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 198.1921\n",
+      "stdout": "TAP version 13\n# Subtest: Incident Response Center API\n    # Subtest: creates, lists, reads, assigns, resolves, and audits incidents inside one tenant\n    ok 1 - creates, lists, reads, assigns, resolves, and audits incidents inside one tenant\n      ---\n      duration_ms: 42.6261\n      type: 'test'\n      ...\n    # Subtest: validates create payloads and allowed status transitions\n    ok 2 - validates create payloads and allowed status transitions\n      ---\n      duration_ms: 7.4428\n      type: 'test'\n      ...\n    # Subtest: enforces RBAC for viewer, responder resolve, audit, create, and job operations\n    ok 3 - enforces RBAC for viewer, responder resolve, audit, create, and job operations\n      ---\n      duration_ms: 12.1405\n      type: 'test'\n      ...\n    # Subtest: isolates tenants for list, read, audit, and SLA reminders\n    ok 4 - isolates tenants for list, read, audit, and SLA reminders\n      ---\n      duration_ms: 5.938\n      type: 'test'\n      ...\n    # Subtest: runs SLA reminder job only for unresolved incidents due within one hour and does not duplicate reminders\n    ok 5 - runs SLA reminder job only for unresolved incidents due within one hour and does not duplicate reminders\n      ---\n      duration_ms: 9.2646\n      type: 'test'\n      ...\n    # Subtest: serves health and the static frontend\n    ok 6 - serves health and the static frontend\n      ---\n      duration_ms: 5.086\n      type: 'test'\n      ...\n    1..6\nok 1 - Incident Response Center API\n  ---\n  duration_ms: 88.2776\n  type: 'suite'\n  ...\n1..1\n# tests 6\n# suites 1\n# pass 6\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 236.1239\n",
       "stderr": ""
     },
     "checks": [
@@ -176,7 +176,7 @@
     "percent": 95,
     "tests": {
       "status": 0,
-      "stdout": "▶ Incident Response Center API\n  ✔ reports health for the sgad variant (17.9321ms)\n  ✔ creates an incident with validation and writes audit evidence (8.9735ms)\n  ✔ enforces tenant isolation for list and read operations (6.6995ms)\n  ✔ enforces role permissions (5.4928ms)\n  ✔ updates assignee and status only through allowed transitions (13.6954ms)\n  ✔ runs SLA reminders with injectable notifier and no duplicates (8.9573ms)\n✔ Incident Response Center API (74.7677ms)\nℹ tests 6\nℹ suites 1\nℹ pass 6\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 200.6291\n",
+      "stdout": "TAP version 13\n# Subtest: Incident Response Center API\n    # Subtest: reports health for the sgad variant\n    ok 1 - reports health for the sgad variant\n      ---\n      duration_ms: 19.8178\n      type: 'test'\n      ...\n    # Subtest: creates an incident with validation and writes audit evidence\n    ok 2 - creates an incident with validation and writes audit evidence\n      ---\n      duration_ms: 13.5821\n      type: 'test'\n      ...\n    # Subtest: enforces tenant isolation for list and read operations\n    ok 3 - enforces tenant isolation for list and read operations\n      ---\n      duration_ms: 6.6908\n      type: 'test'\n      ...\n    # Subtest: enforces role permissions\n    ok 4 - enforces role permissions\n      ---\n      duration_ms: 8.4889\n      type: 'test'\n      ...\n    # Subtest: updates assignee and status only through allowed transitions\n    ok 5 - updates assignee and status only through allowed transitions\n      ---\n      duration_ms: 20.9\n      type: 'test'\n      ...\n    # Subtest: runs SLA reminders with injectable notifier and no duplicates\n    ok 6 - runs SLA reminders with injectable notifier and no duplicates\n      ---\n      duration_ms: 13.382\n      type: 'test'\n      ...\n    1..6\nok 1 - Incident Response Center API\n  ---\n  duration_ms: 99.2294\n  type: 'suite'\n  ...\n1..1\n# tests 6\n# suites 1\n# pass 6\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 247.3101\n",
       "stderr": ""
     },
     "checks": [
@@ -251,6 +251,98 @@
         "pass": true,
         "points": 12,
         "earned": 12
+      }
+    ]
+  },
+  {
+    "variant": "framework",
+    "score": 105,
+    "total": 105,
+    "percent": 100,
+    "checks": [
+      {
+        "name": "agent replay harness present",
+        "pass": true,
+        "points": 5,
+        "earned": 5
+      },
+      {
+        "name": "check script runs agent replay",
+        "pass": true,
+        "points": 4,
+        "earned": 4
+      },
+      {
+        "name": "framework unit test files present",
+        "pass": true,
+        "points": 8,
+        "earned": 8
+      },
+      {
+        "name": "SOP-3 governance fixture present",
+        "pass": true,
+        "points": 5,
+        "earned": 5
+      },
+      {
+        "name": "sgad check passes on framework repo",
+        "pass": true,
+        "points": 12,
+        "earned": 12
+      },
+      {
+        "name": "experience audit passes",
+        "pass": true,
+        "points": 12,
+        "earned": 12
+      },
+      {
+        "name": "governance anti-patterns doc",
+        "pass": true,
+        "points": 8,
+        "earned": 8
+      },
+      {
+        "name": "experience INDEX covers active lessons",
+        "pass": true,
+        "points": 10,
+        "earned": 10
+      },
+      {
+        "name": "at least three active lessons",
+        "pass": true,
+        "points": 10,
+        "earned": 10
+      },
+      {
+        "name": "rollout preflight template",
+        "pass": true,
+        "points": 8,
+        "earned": 8
+      },
+      {
+        "name": "ci-experience openspec change",
+        "pass": true,
+        "points": 7,
+        "earned": 7
+      },
+      {
+        "name": "check script runs tests",
+        "pass": true,
+        "points": 5,
+        "earned": 5
+      },
+      {
+        "name": "check script runs experience audit",
+        "pass": true,
+        "points": 5,
+        "earned": 5
+      },
+      {
+        "name": "check script runs framework benchmark gate",
+        "pass": true,
+        "points": 6,
+        "earned": 6
       }
     ]
   }

@@ -170,7 +170,39 @@ Use this file for candidate lessons that need evidence, scope, or human review b
 `,
   "sgad/experience/episodes/active/.gitkeep": ``,
   "sgad/experience/episodes/archived/.gitkeep": ``,
-  "sgad/experience/runs/.gitkeep": ``
+  "sgad/experience/runs/.gitkeep": ``,
+  "sgad/experience/INDEX.md": `# Experience Index
+
+Search by status, tags, or task_types before recall.
+
+| ID | Status | Tags | Task Types | Summary |
+|---|---|---|---|---|
+`,
+  "sgad/templates/rollout-preflight.md": `# Rollout Preflight Template
+
+Use for R2/R3 changes with batch jobs, external side effects, or operator-run workflows.
+
+## Preflight Gates (run once before batch)
+
+| Gate | Owner | Pass Criteria | Evidence |
+|---|---|---|---|
+| daily-ready / environment | operator | required config present | pending |
+| business preflight | operator | rules validated | pending |
+| human confirmation | operator | explicit ack for production mode | pending |
+
+## Per-Item Resilience (during batch)
+
+| Rule | Requirement |
+|---|---|
+| isolate failures | one item failure must not abort the whole batch |
+| audit each item | success, skip, and error states are recorded |
+| visible progress | operator sees current item and retry state |
+| no silent rollback | partial success remains auditable |
+
+## Rollback
+
+Describe how to stop safely and revert partial batch effects.
+`
 };
 
 function mkdirp(file) {
@@ -283,7 +315,8 @@ Usage:
   sgad init --with-experience [--force] Scaffold SGAD plus optional Experience Layer
   sgad check [--json]                 Verify SGAD governance artifacts and evidence closure
   sgad experience recall --json       Recall bounded project experience summaries
-  sgad experience audit --json        Validate project experience artifacts
+  sgad experience index [--write]     List or regenerate sgad/experience/INDEX.md
+  sgad experience audit [--json]      Validate project experience artifacts
   sgad experience template --json     Add a candidate lesson template to the review queue
   sgad help                           Show this message
 
@@ -503,6 +536,13 @@ function evidenceTokens(value) {
 function evidenceTokenExists(token) {
   if (/^https?:\/\//.test(token)) return true;
   if (/^(uat|issue|pr|external):/i.test(token)) return true;
+  const typed = token.match(/^(fixture|benchmark|smoke):(.+)$/i);
+  if (typed) {
+    const typedPath = typed[2].trim().replace(/^`|`$/g, "");
+    if (!typedPath) return false;
+    if (typedPath.includes("*")) return globExists(typedPath);
+    return fs.existsSync(path.join(root, typedPath));
+  }
   const cleaned = token
     .replace(/^test-map\s+/i, "")
     .replace(/^file:/i, "")
@@ -542,6 +582,7 @@ function escapeRegExp(value) {
 function experience() {
   const subcommand = process.argv[3] ?? "help";
   if (subcommand === "recall") recallExperience();
+  else if (subcommand === "index") indexExperience();
   else if (subcommand === "audit") auditExperience();
   else if (subcommand === "template") templateExperience();
   else experienceHelp();
@@ -551,7 +592,8 @@ function experienceHelp() {
   console.log(`SGAD Experience
 
 Usage:
-  sgad experience recall --query "<task>" --files "path1,path2" [--limit 3] [--max-tokens 800] [--json]
+  sgad experience recall --query "<task>" --files "path1,path2" [--tags "a,b"] [--min-score 4] [--limit 3] [--max-tokens 800] [--json]
+  sgad experience index [--write] [--json]
   sgad experience audit [--json]
   sgad experience template --title "<lesson>" --change "<change-id>" [--json]
 
@@ -563,14 +605,26 @@ function recallExperience() {
   const jsonOutput = process.argv.includes("--json");
   const query = optionValue("--query") ?? "";
   const files = splitList(optionValue("--files") ?? "");
+  const tags = splitList(optionValue("--tags") ?? "").map((tag) => tag.toLowerCase());
+  const minScore = Number(optionValue("--min-score") ?? 4);
   const limit = Number(optionValue("--limit") ?? 3);
   const maxTokens = Number(optionValue("--max-tokens") ?? 800);
   const lessons = loadLessons();
   const matches = lessons
     .filter((lesson) => lesson.status === "active")
     .filter((lesson) => hasLessonScope(lesson) && hasLessonEvidence(lesson))
-    .map((lesson) => ({ lesson, score: lessonScore(lesson, query, files) }))
-    .filter((match) => match.score > 0)
+    .filter((lesson) => tags.length === 0 || lessonMatchesTags(lesson, tags))
+    .map((lesson) => {
+      let score = lessonScore(lesson, query, files);
+      const relevant = score > 0 || hasFileScopeMatch(lesson, files);
+      if (relevant && tags.length > 0) {
+        for (const tag of tags) {
+          if (normalizeArray(lesson.tags).map((item) => item.toLowerCase()).includes(tag)) score += 2;
+        }
+      }
+      return { lesson, score };
+    })
+    .filter((match) => match.score >= minScore)
     .sort((a, b) => b.score - a.score || confidenceRank(b.lesson.confidence) - confidenceRank(a.lesson.confidence))
     .slice(0, Math.max(0, limit));
 
@@ -602,6 +656,85 @@ function recallExperience() {
   else {
     console.log("Relevant SGAD experience:");
     for (const lesson of selected) console.log(`- ${lesson.id}: ${lesson.summary}`);
+  }
+}
+
+function indexExperience() {
+  const jsonOutput = process.argv.includes("--json");
+  const write = process.argv.includes("--write");
+  const lessons = loadLessons();
+  const entries = lessons.map((lesson) => ({
+    id: lesson.id,
+    title: lesson.title,
+    status: lesson.status,
+    tags: normalizeArray(lesson.tags),
+    task_types: normalizeArray(lesson.scope?.task_types),
+    files: normalizeArray(lesson.scope?.files),
+    confidence: lesson.confidence,
+    summary: lessonSummary(lesson)
+  }));
+
+  const result = { count: entries.length, lessons: entries };
+  if (jsonOutput) {
+    console.log(JSON.stringify(result, null, 2));
+    return;
+  }
+
+  const lines = [
+    "# Experience Index",
+    "",
+    "Search by **status**, **tags**, or **task_types** before recall.",
+    "",
+    "| ID | Status | Tags | Task Types | Summary |",
+    "|---|---|---|---|---|"
+  ];
+  for (const entry of entries) {
+    lines.push(`| ${entry.id} | ${entry.status} | ${entry.tags.join(", ") || "-"} | ${entry.task_types.join(", ") || "-"} | ${entry.summary.replace(/\|/g, "\\|")} |`);
+  }
+  lines.push("");
+  const body = `${lines.join("\n")}\n`;
+  if (write) {
+    mkdirp("sgad/experience/INDEX.md");
+    fs.writeFileSync(path.join(root, "sgad/experience/INDEX.md"), body, "utf8");
+    console.log("Wrote sgad/experience/INDEX.md");
+  } else {
+    console.log(body);
+  }
+}
+
+function lessonMatchesTags(lesson, tags) {
+  const lessonTags = normalizeArray(lesson.tags).map((tag) => tag.toLowerCase());
+  return tags.some((tag) => lessonTags.includes(tag));
+}
+
+function hasFileScopeMatch(lesson, files) {
+  if (files.length === 0) return false;
+  return files.some((file) =>
+    normalizeArray(lesson.scope?.files).some((scopeFile) => fileMatchesScope(file, scopeFile))
+  );
+}
+
+function validateExperienceIndex(lessons, issues) {
+  if (lessons.length === 0) return;
+  const indexPath = path.join(root, "sgad/experience/INDEX.md");
+  if (!fs.existsSync(indexPath)) {
+    issues.push(experienceIssue(
+      "EXPERIENCE_INDEX_MISSING",
+      "INDEX",
+      "lessons exist but sgad/experience/INDEX.md is missing"
+    ));
+    return;
+  }
+  const index = fs.readFileSync(indexPath, "utf8");
+  for (const lesson of lessons) {
+    if (lesson.status !== "active" || !lesson.id) continue;
+    if (!index.includes(String(lesson.id))) {
+      issues.push(experienceIssue(
+        "EXPERIENCE_INDEX_STALE",
+        lesson.id,
+        `active lesson ${lesson.id} is missing from sgad/experience/INDEX.md`
+      ));
+    }
   }
 }
 
@@ -644,6 +777,8 @@ function auditExperience() {
       }
     }
   }
+
+  validateExperienceIndex(lessons, issues);
 
   const passed = issues.length === 0;
   const result = { passed, issues, warnings };

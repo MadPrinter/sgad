@@ -8,9 +8,11 @@
   },
   "scripts": {
     "sgad": "node bin/sgad.js",
+    "test": "node --test test/sgad-check.test.js test/sgad-experience.test.js test/sgad-ci.test.js test/agent-replay.test.js",
     "evaluate": "node tools/evaluate-all.js",
+    "evaluate:replay": "node tools/agent-replay.js --json --min-pass-rate 1",
     "evaluate:saas": "node tools/evaluate-saas-page.js",
-    "check": "node bin/sgad.js check && node tools/evaluate-all.js",
+    "check": "npm test && node tools/agent-replay.js --min-pass-rate 1 && node bin/sgad.js check && node bin/sgad.js experience audit && node tools/evaluate-all.js --min-score 95 --min-framework-score 98",
     "test:openspec": "cd variants/openspec && node --test",
     "test:superpowers": "cd variants/superpowers && node --test",
     "test:sgad": "cd variants/sgad && node --test"

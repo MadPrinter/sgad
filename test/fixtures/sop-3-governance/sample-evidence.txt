@@ -1,0 +1,1 @@
+SOP-3 fixture evidence artifact for sgad check path validation.

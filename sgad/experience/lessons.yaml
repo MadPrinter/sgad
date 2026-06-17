@@ -8,6 +8,7 @@ lessons:
     triggers:
       keywords: [sgad check, evidence, pending, waiver]
       commands: [node bin/sgad.js check]
+    tags: [governance-gate, evidence, closure]
     advice: Validate artifact closure, not only artifact existence.
     summary: For R2/R3 governance gates, validate evidence closure rather than file presence.
     evidence:
@@ -15,4 +16,56 @@ lessons:
       tests: [test/sgad-check.test.js]
     confidence: high
     status: active
-    last_validated: 2026-06-09
+    last_validated: 2026-06-17
+  - id: LESSON-002
+    title: Chat and recordings are not source of truth
+    scope:
+      repos: [sgad]
+      files: [openspec/changes, sgad/policies/governance-anti-patterns.md]
+      task_types: [spec, migration, agent-handoff]
+    triggers:
+      keywords: [chat history, recording, shadowbot, source of truth, repository]
+    tags: [repository, spec, anti-pattern]
+    advice: Persist decisions in openspec and sgad artifacts; treat recordings as samples only.
+    summary: Agent chat and recorded flows are inputs, not durable requirements or selectors.
+    evidence:
+      files: [sgad/policies/governance-anti-patterns.md, docs/experience-layer.md]
+      episodes: [sgad/experience/episodes/active/repository-over-chat.md]
+    confidence: high
+    status: active
+    last_validated: 2026-06-17
+  - id: LESSON-003
+    title: Retries and governance progress must be visible
+    scope:
+      repos: [sgad]
+      files: [bin/sgad.js, package.json]
+      task_types: [cli-check, ci, agent-checkpoint]
+    triggers:
+      keywords: [retry, progress, silent, sgad check, benchmark gate]
+      commands: [npm run check, node bin/sgad.js check]
+    tags: [retry, ux, ci, visibility]
+    advice: Surface warnings, gate names, and benchmark results; do not fail silently in loops.
+    summary: Operator-visible progress applies to governance CLI and CI gates, not only product UI.
+    evidence:
+      tests: [test/sgad-ci.test.js]
+      files: [tools/evaluate-all.js]
+    confidence: high
+    status: active
+    last_validated: 2026-06-17
+  - id: LESSON-004
+    title: Preflight before batch; per-item resilience during batch
+    scope:
+      repos: [sgad]
+      files: [sgad/templates/rollout-preflight.md]
+      task_types: [rollout, batch-job, external-side-effect]
+    triggers:
+      keywords: [preflight, batch, inbox, continue on error, rollout]
+    tags: [rollout, batch, preflight, resilience]
+    advice: Validate environment and business gates once before batch; isolate per-item failures with audit.
+    summary: High-risk batch work needs preflight gates plus per-item failure isolation and audit trails.
+    evidence:
+      files: [sgad/templates/rollout-preflight.md, sgad/policies/governance-anti-patterns.md]
+      episodes: [sgad/experience/episodes/active/preflight-batch-resilience.md]
+    confidence: medium
+    status: active
+    last_validated: 2026-06-17

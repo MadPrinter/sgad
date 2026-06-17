@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "description": "Deterministic L3 replay scenarios for SGAD agent governance workflows.",
+  "scenarios": [
+    {
+      "id": "CHECK-PENDING-FAIL",
+      "category": "check",
+      "intent": "Agent leaves R2 evidence pending without waiver",
+      "expect": { "passed": false, "issueCodes": ["EVIDENCE_PENDING"] }
+    },
+    {
+      "id": "CHECK-CLOSURE-PASS",
+      "category": "check",
+      "intent": "Agent closes evidence with real paths",
+      "expect": { "passed": true }
+    },
+    {
+      "id": "RECALL-EVIDENCE-HIT",
+      "category": "recall",
+      "intent": "R2 evidence gate task recalls closure lesson",
+      "query": "sgad check evidence pending waiver",
+      "files": ["bin/sgad.js", "sgad/evidence-matrix.md"],
+      "expect": { "matched": true, "lessonIds": ["LESSON-001"] }
+    },
+    {
+      "id": "RECALL-TAG-NOISE",
+      "category": "recall",
+      "intent": "Irrelevant query with rollout tag should not recall noise",
+      "query": "unrelated frontend css layout",
+      "tags": ["rollout"],
+      "expect": { "matched": false, "lessonIds": [] }
+    },
+    {
+      "id": "RECALL-PREFLIGHT-HIT",
+      "category": "recall",
+      "intent": "Batch rollout task recalls preflight lesson",
+      "query": "preflight batch inbox continue on error",
+      "files": ["sgad/templates/rollout-preflight.md"],
+      "tags": ["rollout", "batch"],
+      "expect": { "matched": true, "lessonIds": ["LESSON-004"] }
+    },
+    {
+      "id": "SOP-STRICT-FAIL",
+      "category": "sop-fixture",
+      "intent": "SOP-3 production-style strict governance rejects pending rows",
+      "fixture": "strict",
+      "expect": { "passed": false, "issueCodes": ["EVIDENCE_PENDING"] }
+    },
+    {
+      "id": "SOP-RELAXED-PASS",
+      "category": "sop-fixture",
+      "intent": "SOP-3 dev-style relaxed governance allows pending budget",
+      "fixture": "relaxed",
+      "expect": { "passed": true }
+    },
+    {
+      "id": "AUDIT-INDEX-SYNC",
+      "category": "audit",
+      "intent": "Active lessons missing from INDEX fail audit",
+      "expect": { "passed": false, "issueCodes": ["EXPERIENCE_INDEX_STALE"] }
+    }
+  ]
+}
